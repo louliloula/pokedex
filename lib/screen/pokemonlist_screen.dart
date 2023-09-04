@@ -11,16 +11,18 @@ import '../pokemon_repository.dart';
 class PokemonListScreen extends StatelessWidget {
   //final PokemonRepository repository = PokemonRepository();
   late final SharedPreferences prefs;
-  late final PokemonRepository repository;
+  final PokemonRepository repository;
 
 
-  PokemonListScreen({Key?key}):super(key:key){
+
+
+  PokemonListScreen({Key?key, required this.repository}):super(key:key){
     _init();
   }
 
   Future<void> _init() async {
     prefs = await SharedPreferences.getInstance();
-    repository = PokemonRepository(prefs);
+    //repository = PokemonRepository(prefs);
   }
 
 
@@ -71,11 +73,11 @@ class PokemonListScreen extends StatelessWidget {
                         ],
                       ),
                       if (state is PokemonListLoaded)
-                        PokemonList(pokemonList: state.pokemonList),
+                        PokemonList(pokemonList: state.pokemonList, repository: repository,),
                       if(state is PokemonListScreenUpdated)
-                        PokemonList(pokemonList: state.filteredList),
+                        PokemonList(pokemonList: state.filteredList, repository: repository,),
                        if(state is PokemonListScreenSortAlphabetically)
-                        PokemonList(pokemonList: state.sortListAz),
+                        PokemonList(pokemonList: state.sortListAz, repository:repository,),
                       if (state is PokemonListError)
                         Text(state.errorMessage),
                       if (state is PokemonListLoading)
@@ -92,10 +94,11 @@ class PokemonListScreen extends StatelessWidget {
 }
 
 class PokemonList extends StatelessWidget{
-  PokemonList({super.key,required this.pokemonList});
+  PokemonList({super.key,required this.pokemonList, required this.repository});
 
+  final PokemonRepository repository;
  final List<Pokemon> pokemonList;
-  late final PokemonRepository repository;
+
 
   @override
   Widget build(BuildContext context) {

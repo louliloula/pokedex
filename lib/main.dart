@@ -3,12 +3,17 @@ import 'package:pokedex/pokemon_repository.dart';
 import 'package:pokedex/screen/pokemonlist_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final PokemonRepository repository = PokemonRepository(prefs);
+
+  runApp( MyApp(repository: repository,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final PokemonRepository repository;
+  const MyApp({super.key,required this.repository});
 
   // This widget is the root of your application.
   @override
@@ -28,7 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: PokemonListScreen(),
+      home: PokemonListScreen(repository: repository),
     );
   }
 }

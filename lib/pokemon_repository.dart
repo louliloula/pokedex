@@ -12,6 +12,17 @@ class PokemonRepository {
 
   PokemonRepository(this._prefs);
 
+  Future<void> savePokemonList(List<Pokemon>pokemonList) async {
+    //stock les données de maniere persistante
+    final prefs = await SharedPreferences.getInstance();
+    //enregistre la liste de pokemon / map sur chaque pokemon de la liste / convertir le resultat en liste
+    final pokemonListJson = pokemonList.map((pokemon) => pokemon.toJson()).toList();
+    //je prend la liste pokemonListJson
+    final pokemonListJsonToString = jsonEncode(pokemonListJson);
+    await prefs.setString('pokemonList', pokemonListJsonToString);
+
+  }
+
 
   Future<List<Pokemon>> getPokemonListFromLocal() async {
     //chargement du contenu du fichier JSon
