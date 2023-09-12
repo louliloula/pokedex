@@ -6,12 +6,12 @@ import 'package:pokedex/screen/pokemondetail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/pokemon.dart';
-import '../pokemon_repository.dart';
+import '../repository/pokemon_repository.dart';
 
 class PokemonListScreen extends StatelessWidget {
-  //final PokemonRepository repository = PokemonRepository();
-  late final SharedPreferences prefs;
   final PokemonRepository repository;
+  late final SharedPreferences prefs;
+
 
 
 
@@ -31,9 +31,9 @@ class PokemonListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => PokemonListCubit(repository)..loadPokemonList(),
-            child: Scaffold(
-            body: Padding(
+        create: (context) => PokemonListCubit(
+            context.read<PokemonRepository>())..loadPokemonList(),
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal:20 ,vertical:75 ),
               child: BlocBuilder<PokemonListCubit,PokemonListState>(
                 builder: (blocContext,state){
@@ -53,8 +53,11 @@ class PokemonListScreen extends StatelessWidget {
                             ),
                           ),
                           ),
+                         //Changer le parametre par une simple value
+                          //read differente methode du cubit
                          PopupMenuButton<int>( onSelected:(sortAz){
                            blocContext.read<PokemonListCubit>().filterPokemonListAlphabetically(sortAz);
+
                          },
                              itemBuilder: (context){
                            return [
@@ -73,11 +76,11 @@ class PokemonListScreen extends StatelessWidget {
                         ],
                       ),
                       if (state is PokemonListLoaded)
-                        PokemonList(pokemonList: state.pokemonList, repository: repository,),
-                      if(state is PokemonListScreenUpdated)
-                        PokemonList(pokemonList: state.filteredList, repository: repository,),
+                        PokemonList(pokemonList: state.pokemonList,repository: repository,),
+                      if(state is PokemonListFilteredScreen)
+                        PokemonList(pokemonList: state.filteredList,repository: repository,),
                        if(state is PokemonListScreenSortAlphabetically)
-                        PokemonList(pokemonList: state.sortListAz, repository:repository,),
+                        PokemonList(pokemonList: state.sortListAz,repository: repository,),
                       if (state is PokemonListError)
                         Text(state.errorMessage),
                       if (state is PokemonListLoading)
@@ -88,7 +91,7 @@ class PokemonListScreen extends StatelessWidget {
                 }
               ),
             ),
-    ),
+
     );
   }
 }
@@ -114,7 +117,7 @@ class PokemonList extends StatelessWidget{
                 onTap:(){
                   Navigator.push(
                       context, MaterialPageRoute(
-                      builder: (context)=>PokemonDetailScreen(pokemonDetail : pokemonList[index],repository: repository,)));
+                      builder: (context)=>PokemonDetailScreen(pokemon : pokemonList[index] , repository: repository,)));
                 },
                 child: Container(
                   margin: EdgeInsets.all(7),

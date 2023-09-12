@@ -1,71 +1,76 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/logic/pokemonlist_state.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/pokemon.dart';
-import '../pokemon_repository.dart';
+import '../repository/pokemon_repository.dart';
 
-class PokemonListCubit extends Cubit<PokemonListState>{
-   final PokemonRepository repository;
-  PokemonListCubit(this.repository):super(const PokemonListScreenInitial());
+class PokemonListCubit extends Cubit<PokemonListState> {
+  final PokemonRepository repository;
+
+
+  PokemonListCubit(this.repository) :super(const PokemonListScreenInitial());
 
 
   late List<Pokemon> _pokemonList;
+  //liste trié de A a Z
+  bool tipping = true;
 
 
-
-  Future<void> loadPokemonList() async{
+  Future<void> loadPokemonList() async {
     emit(PokemonListLoading());
     try {
       _pokemonList = await repository.getPokemonListFromLocal();
       emit(PokemonListLoaded(_pokemonList));
-    }catch(e){
+    } catch (e) {
       emit(PokemonListError("Une erreur s'est produite"));
     }
   }
 
-  void filterPokemonList(String value){
+  void filterPokemonList(String value) {
     final List <Pokemon> pokemon = [];
-    _pokemonList.forEach((element) {
-      if(element.name?.toLowerCase().startsWith(value.toLowerCase()) == true){
+    for (var element in _pokemonList) {
+      if (element.name?.toLowerCase().startsWith(value.toLowerCase()) == true) {
         pokemon.add(element);
       }
-      if(int.tryParse(value) == element.nationalId){
+      if (int.tryParse(value) == element.nationalId) {
         pokemon.add(element);
       }
-    });
-    emit(PokemonListScreenUpdated(pokemon));
+    }
+    emit(PokemonListFilteredScreen(pokemon));
   }
 
-  void filterPokemonListAlphabetically(int sortAZ){
+  void filterPokemonListAlphabetically(int sortAZ) {
     List<Pokemon> temp = _pokemonList;
-    if(sortAZ == 0){
+    emit(PokemonListLoading());
+    if (sortAZ == 0) {
       var flag = true;
-      while(flag){
+      while (flag) {
         flag = false;
-        for(var i = 0 ; i < temp.length -1 ; i ++ ){
-          if(temp[i].name!.compareTo(temp[i+1].name!) > 0){
+        for (var i = 0; i < temp.length - 1; i ++) {
+          if (temp[i].name!.compareTo(temp[i + 1].name!) > 0) {
             flag = true;
             var tempPokemon = temp[i];
-            temp[i]= temp[i + 1];
+            temp[i] = temp[i + 1];
             temp[i + 1] = tempPokemon;
+
           }
         }
       }
-      if( sortAZ == 1){
-        temp.sort((a,b)=>
-        b.name!.compareTo(a.name!));
-      }
-      emit(PokemonListScreenSortAlphabetically(temp));
-      if(sortAZ == 2){
-        loadPokemonList();
-      }
-
-
-
+      tipping = true;
+    }
+    else if (sortAZ == 1) {
+      temp.sort((a, b) =>
+          b.name!.compareTo(a.name!));
+      tipping = false;
 
     }
+    else if (sortAZ == 2) {
+      loadPokemonList();
+      tipping= true;
+    }
+    emit(PokemonListScreenSortAlphabetically(temp));
+
   }
 }
-
 

@@ -27,7 +27,6 @@ class PokemonListLoaded extends PokemonListState {
 
 class PokemonListError extends PokemonListState {
   final String errorMessage;
-
   PokemonListError(this.errorMessage);
 
   @override
@@ -38,9 +37,9 @@ class PokemonListLoading extends PokemonListState{
   const PokemonListLoading();
 }
 
-class PokemonListScreenUpdated extends PokemonListState{
+class PokemonListFilteredScreen extends PokemonListState{
   final List<Pokemon> filteredList;
-  const PokemonListScreenUpdated(this.filteredList);
+  const PokemonListFilteredScreen(this.filteredList);
 
 }
 
@@ -48,3 +47,4 @@ class PokemonListScreenSortAlphabetically extends PokemonListState{
   final List<Pokemon> sortListAz;
   const PokemonListScreenSortAlphabetically(this.sortListAz);
 }
+

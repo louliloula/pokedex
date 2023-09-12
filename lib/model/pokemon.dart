@@ -1,4 +1,6 @@
-class Pokemon {
+import 'package:equatable/equatable.dart';
+
+class Pokemon  {
   String? sId;
   int? pkdxId;
   int? nationalId;
@@ -9,7 +11,7 @@ class Pokemon {
   String? imageUrl;
   List<String>? types;
   List<Evolutions>? evolutions;
-  bool? isFavorite;
+  bool isFavorite = false;
 
   Pokemon(
       {this.sId,
@@ -58,9 +60,11 @@ class Pokemon {
     }
     return data;
   }
+
+
 }
 
-class Evolutions {
+class Evolutions  {
   int? level;
   String? method;
   String? to;
@@ -83,4 +87,6 @@ class Evolutions {
     data['_id'] = this.sId;
     return data;
   }
+
+
 }
