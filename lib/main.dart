@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/repository/pokemon_repository.dart';
-import 'package:pokedex/screen/pokemondetail_screen.dart';
 import 'package:pokedex/screen/pokemonhome_screen.dart';
 import 'package:pokedex/screen/pokemonlist_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final PokemonRepository repository = PokemonRepository(prefs);
+  final PokemonRepository repository = PokemonRepository(prefs: prefs);
 
   runApp(MyApp(repository: repository,));
 }
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
+
           // This is the theme of your application.
           //
           // Try running your application with "flutter run". You'll see the
@@ -37,42 +37,37 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.amber,
-            unselectedItemColor: Colors.grey,
+        home: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 15,
+              backgroundColor: Colors.white,
+              bottom: TabBar(tabs: [
+                Tab(icon: Icon(Icons.catching_pokemon_outlined,color: Colors.grey,),),
+                Tab(icon: Icon(Icons.library_books,color: Colors.grey,),)
+              ],
+              ),
 
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_mini),
-                  label : 'home'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.auto_stories_outlined),
-                  label: 'list'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.catching_pokemon_outlined),
-                  label: 'detail'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  label: 'favorite'
-              ),
-            ],
+            ),
+            body: TabBarView(
+              children: [
+                RepositoryProvider(
+                create: (context) => repository,
+            child :PokemonHomeScreen(repository: repository,),
           ),
-          body: RepositoryProvider(
-            create: (context) => repository,
-            child: PokemonHomeScreen(repository: repository),
+                RepositoryProvider(create: (context)=> repository,
+                child: PokemonListScreen(repository: repository,),)
+    ]),
+
+            ),
+        ),
 
 
-          ),
-        )
-      //   RepositoryProvider(
-      //   create: (context) => repository,
-      //   child: PokemonListScreen(repository: repository,),
-      // ),
-    );
+        );
+        // RepositoryProvider(
+        //   create: (context) => repository,
+        //   child: PokemonListScreen(repository: repository,),
+        // ));
   }
 }
-

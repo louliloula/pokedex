@@ -34,7 +34,7 @@ class PokemonListScreen extends StatelessWidget {
         create: (context) => PokemonListCubit(
             context.read<PokemonRepository>())..loadPokemonList(),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal:20 ,vertical:75 ),
+              padding: EdgeInsets.symmetric(horizontal:20 ,vertical:25 ),
               child: BlocBuilder<PokemonListCubit,PokemonListState>(
                 builder: (blocContext,state){
                   return Column(
@@ -47,7 +47,7 @@ class PokemonListScreen extends StatelessWidget {
                               blocContext.read<PokemonListCubit>().filterPokemonList(value);
                             },
                             decoration: InputDecoration(
-                              border: OutlineInputBorder(),
+                              border: UnderlineInputBorder(),
                               hintText: 'Recherchez un pokemon',
                               suffixIcon: Icon(Icons.search),
                             ),
@@ -58,41 +58,48 @@ class PokemonListScreen extends StatelessWidget {
                          PopupMenuButton<int>( onSelected:(sortAz){
                            blocContext.read<PokemonListCubit>().filterPokemonListAlphabetically(sortAz);
 
-                         },
-                             itemBuilder: (context){
-                           return [
-                             PopupMenuItem(
-                               value : 0,child:
-                           Text("Pokemon A-Z")),
+                           },
+                               itemBuilder: (context){
+                             return [
                                PopupMenuItem(
-                               value : 1,child:
-                               Text("Pokemon Z-A")),
-                             PopupMenuItem(
-                                 value : 2,child:
-                             Text("Liste de pokemons")),
-                               ];
-                             }
-                             )
-                        ],
-                      ),
-                      if (state is PokemonListLoaded)
-                        PokemonList(pokemonList: state.pokemonList,repository: repository,),
-                      if(state is PokemonListFilteredScreen)
-                        PokemonList(pokemonList: state.filteredList,repository: repository,),
-                       if(state is PokemonListScreenSortAlphabetically)
-                        PokemonList(pokemonList: state.sortListAz,repository: repository,),
-                      if (state is PokemonListError)
-                        Text(state.errorMessage),
-                      if (state is PokemonListLoading)
-                        CircularProgressIndicator(),
-                    ],
+                                 value : 0,child:
+                             Text("Pokemon A-Z")),
+                                 PopupMenuItem(
+                                 value : 1,child:
+                                 Text("Pokemon Z-A")),
+                               PopupMenuItem(
+                                   value : 2,child:
+                               Text("Pokemons favoris")),
+                               PopupMenuItem(
+                                   value : 3,child:
+                               Text("Liste de pokemons")),
+                                 ];
+                               }
+                               )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 35,
+                        ),
+                        if (state is PokemonListLoaded)
+                          PokemonList(pokemonList: state.pokemonList,repository: repository,),
+                        if(state is PokemonListFilteredScreen)
+                          PokemonList(pokemonList: state.filteredList,repository: repository,),
+                         if(state is PokemonListScreenSortAlphabetically)
+                          PokemonList(pokemonList: state.sortListAz,repository: repository,),
+                        if (state is PokemonListError)
+                          Text(state.errorMessage),
+                        if (state is PokemonListLoading)
+                          CircularProgressIndicator(),
+                      ],
 
-                  );
-                }
+                    );
+                  }
+                ),
               ),
-            ),
+            );
 
-    );
+
   }
 }
 

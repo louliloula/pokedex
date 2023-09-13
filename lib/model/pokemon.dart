@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Pokemon  {
-  String? sId;
+  String sId;
   int? pkdxId;
   int? nationalId;
   String? name;
@@ -14,7 +14,7 @@ class Pokemon  {
   bool isFavorite = false;
 
   Pokemon(
-      {this.sId,
+      {required this.sId,
         this.pkdxId,
         this.nationalId,
         this.name,
@@ -24,10 +24,9 @@ class Pokemon  {
         this.imageUrl,
         this.types,
         this.evolutions,
-        this.isFavorite = false});
+         this.isFavorite = false});
 
-  Pokemon.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
+  Pokemon.fromJson(Map<String, dynamic> json) : sId = json['_id'] {
     pkdxId = json['pkdx_id'];
     nationalId = json['national_id'];
     name = json['name'];

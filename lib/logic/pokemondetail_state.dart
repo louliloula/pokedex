@@ -17,5 +17,11 @@ class FavouritePokemonHeart extends PokemonDetailState{
   const FavouritePokemonHeart(this.pokemon,this.isFavorite);
 
   @override
+
   List<Object?> get props => [pokemon,isFavorite];
 }
+
+class PokemonFavoriteListLoading extends PokemonDetailState{
+  const PokemonFavoriteListLoading();
+}
+

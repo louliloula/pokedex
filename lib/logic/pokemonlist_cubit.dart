@@ -13,8 +13,8 @@ class PokemonListCubit extends Cubit<PokemonListState> {
 
 
   late List<Pokemon> _pokemonList;
-  //liste trié de A a Z
-  bool tipping = true;
+  late final SharedPreferences _prefs;
+
 
 
   Future<void> loadPokemonList() async {
@@ -53,24 +53,27 @@ class PokemonListCubit extends Cubit<PokemonListState> {
             var tempPokemon = temp[i];
             temp[i] = temp[i + 1];
             temp[i + 1] = tempPokemon;
-
           }
         }
       }
-      tipping = true;
+
     }
     else if (sortAZ == 1) {
       temp.sort((a, b) =>
           b.name!.compareTo(a.name!));
-      tipping = false;
+    }
+    else if(sortAZ == 2){
 
     }
-    else if (sortAZ == 2) {
+    else if (sortAZ == 3) {
       loadPokemonList();
-      tipping= true;
     }
+
+
+
     emit(PokemonListScreenSortAlphabetically(temp));
-
   }
-}
 
+
+
+}

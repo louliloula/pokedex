@@ -10,12 +10,12 @@ import '../model/pokemon.dart';
 //Reponsable de la gestion des données des pokemons
 class PokemonRepository {
 //stocker les données persistantes
-  final SharedPreferences _prefs;
+  final SharedPreferences prefs;
 
 
 
   //prend une instance de shared preference comme argument
-  PokemonRepository(this._prefs);
+  PokemonRepository({required this.prefs});
 
 
 
@@ -48,23 +48,24 @@ class PokemonRepository {
   //mettre a jour la mise en favori d un pokemon dans la liste des pokemons
   Future<void> updateFavoritePokemon(Pokemon pokemon) async {
     //Liste de pokemons favoris vide
-    final List<String> favoritePokemon = _prefs.getStringList(
+    final List<String> favoritePokemon = prefs.getStringList(
         'favoritePokemon') ?? [];
+    print(favoritePokemon);
     //verifie si la liste contient deja le pokemon favoris selon son nationalId si c'est le cas supprimer
-      if (favoritePokemon.contains(pokemon.nationalId.toString())) {
-        favoritePokemon.remove(pokemon.nationalId.toString());
+      if (favoritePokemon.contains(pokemon.sId)) {
+        favoritePokemon.remove(pokemon.sId);
       } else {
-        favoritePokemon.add(pokemon.nationalId.toString());
+        favoritePokemon.add(pokemon.sId);
       }
       //enregistrement de la mise a jour de favorite pokemon de maniere persistante
-      await _prefs.setStringList('favoritePokemon', favoritePokemon);
+      await prefs.setStringList('favoritePokemon', favoritePokemon);
 
 
   }
 
   //Recuperation des pokemons favoris
   Future<List<Pokemon>> getFavoritePokemons(List<Pokemon> allPokemons) async {
-    final List<String>? favoritePokemon = _prefs.getStringList('favoritePokemon') ?? [];
+    final List<String> favoritePokemon = prefs.getStringList('favoritePokemon') ?? [];
 
     if ( favoritePokemon == null) {
       // Aucun Pokémon en favori, renvoie une liste vide
@@ -73,7 +74,7 @@ class PokemonRepository {
     //filtre tous les pokemons
     final favoritePokemons = allPokemons
     //inclure le pokemon dont le national ID est present dans liste de pokemons favoris
-        .where((pokemon) => favoritePokemon.contains(pokemon.nationalId.toString()))
+        .where((pokemon) => favoritePokemon.contains(pokemon.sId))
     //transformation en liste
         .toList();
 
@@ -81,14 +82,21 @@ class PokemonRepository {
 
 
   }
+   //fonction Set et Get pour le randomPokemon
+
+
   Future <Pokemon> generateRandomPokemon()async{
     List<Pokemon>? pokemonList;
+
     pokemonList ??= await getPokemonListFromLocal();
 
     final random = Random();
     final randomIndex = random.nextInt(pokemonList.length);
     return pokemonList[randomIndex];
   }
+
+
+
 
 
 

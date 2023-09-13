@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/logic/pokemondetail_state.dart';
 import 'package:pokedex/repository/pokemon_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/pokemon.dart';
 
@@ -10,10 +11,14 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   PokemonDetailCubit(this.repository)
       :super(const PokemonDetailScreenInitial());
 
+  //late List<Pokemon> pokemon;
+
   void favouritePokemon(Pokemon pokemon) {
 
       pokemon.isFavorite = !pokemon.isFavorite;
+      repository.updateFavoritePokemon(pokemon);
       emit(FavouritePokemonHeart(pokemon,pokemon.isFavorite));
 
     }
+
 }

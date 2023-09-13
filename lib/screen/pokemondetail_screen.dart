@@ -51,7 +51,8 @@ class PokemonDetailScreen extends StatelessWidget {
                                     pokemon.isFavorite!
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    color: state is FavouritePokemonHeart
+                                   color : pokemon.isFavorite
+                                    //color: state is FavouritePokemonHeart
                                         ? Colors.red
                                         : Colors.grey,
                                   ),

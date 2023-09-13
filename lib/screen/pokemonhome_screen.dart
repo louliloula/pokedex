@@ -10,6 +10,7 @@ import '../repository/pokemon_repository.dart';
 class PokemonHomeScreen extends StatelessWidget {
   final PokemonRepository repository;
 
+
   const PokemonHomeScreen({super.key, required this.repository});
 
   @override
@@ -27,7 +28,7 @@ class PokemonHomeScreen extends StatelessWidget {
               final randomPokemon = state.randomPokemon;
               final myPokemon = state.myPokemon;
               return Padding(
-                padding: const EdgeInsets.only(top: 95, left: 15),
+                padding: const EdgeInsets.only(top: 35, left: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -50,6 +51,7 @@ class PokemonHomeScreen extends StatelessWidget {
                             width: (70),
                           ),
                           Expanded(
+                            flex: 1,
                               child: ListTile(
                             title: Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
@@ -60,7 +62,7 @@ class PokemonHomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 45),
                     GridView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
