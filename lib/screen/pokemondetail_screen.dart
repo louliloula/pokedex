@@ -17,7 +17,7 @@ class PokemonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PokemonDetailCubit(repository),
+      create: (context) => PokemonDetailCubit(repository,pokemon),
       child: Material(
         child: Padding(
           padding: const EdgeInsets.only(top: 75),
@@ -48,18 +48,18 @@ class PokemonDetailScreen extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: IconButton(
                                   icon: Icon(
-                                    pokemon.isFavorite!
+                                   state is FavouritePokemonHeart
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                   color : pokemon.isFavorite
-                                    //color: state is FavouritePokemonHeart
+                                   //color : pokemon.isFavorite
+                                    color: state is FavouritePokemonHeart
                                         ? Colors.red
                                         : Colors.grey,
                                   ),
                                   onPressed: () {
                                     blocContext
                                         .read<PokemonDetailCubit>()
-                                        .favouritePokemon(pokemon);
+                                        .favouritePokemon();
                                   },
                                 )),
                             Image(image: NetworkImage(pokemon.imageUrl!)),

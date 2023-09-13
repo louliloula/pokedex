@@ -25,3 +25,5 @@ class PokemonFavoriteListLoading extends PokemonDetailState{
   const PokemonFavoriteListLoading();
 }
 
+
+

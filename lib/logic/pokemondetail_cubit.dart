@@ -8,17 +8,20 @@ import '../model/pokemon.dart';
 class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   final PokemonRepository repository;
 
-  PokemonDetailCubit(this.repository)
+  PokemonDetailCubit(this.repository,this.pokemon)
       :super(const PokemonDetailScreenInitial());
-
+   final Pokemon pokemon;
   //late List<Pokemon> pokemon;
+  bool isFavorite = false;
 
-  void favouritePokemon(Pokemon pokemon) {
 
-      pokemon.isFavorite = !pokemon.isFavorite;
+
+  void favouritePokemon() {
+    //gestion du clique sur le pokemon
+    //passer d'un etat à un autre
+
       repository.updateFavoritePokemon(pokemon);
-      emit(FavouritePokemonHeart(pokemon,pokemon.isFavorite));
-
+      emit(FavouritePokemonHeart(pokemon, true));
     }
+  }
 
-}

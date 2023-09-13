@@ -51,7 +51,6 @@ class PokemonHomeScreen extends StatelessWidget {
                             width: (70),
                           ),
                           Expanded(
-                            flex: 1,
                               child: ListTile(
                             title: Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
