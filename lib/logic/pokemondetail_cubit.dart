@@ -11,23 +11,23 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   final Pokemon pokemon;
 
   PokemonDetailCubit(this.repository, this.pokemon)
-      :super(PokemonDetail(false, pokemon));
+      :super(PokemonDetail(false, pokemon)){
+    loadFavorite();
+  }
 
 
-  // //add methode d'envoie sur liste
-  // void favouritePokemon() {
-  //   bool isFavorite = false;
-  //   isFavorite = !isFavorite;
-  //   //repository.updateFavoritePokemon(pokemon);
-  //   emit(FavouritePokemonHeart(isFavorite, pokemon));
-  // }
-
-  //repository.updateFavoritePokemon(pokemon);
+  Future<void> loadFavorite() async {
+    final prefs = await SharedPreferences.getInstance();
+    isFavorite = prefs.getBool('favorite_${pokemon.sId}') ?? false;
+    emit(PokemonDetail(isFavorite, pokemon));
+  }
 
 
   void displayPokemon() async {
     await repository.updateFavoritePokemon(pokemon);
     isFavorite = !isFavorite;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('favorite_${pokemon.sId}', isFavorite);
     print(isFavorite);
     emit(PokemonDetail(isFavorite,pokemon));
 

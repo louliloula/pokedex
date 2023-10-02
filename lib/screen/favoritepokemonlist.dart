@@ -8,8 +8,8 @@ import '../model/pokemon.dart';
 
 class FavoritePokemonList extends StatelessWidget {
   final PokemonRepository repository;
-  final List<Pokemon>? allFavorites;
-  const FavoritePokemonList({super.key,required this.repository, this.allFavorites});
+ final List<Pokemon> allFavorites;
+  const FavoritePokemonList({super.key,required this.repository, required this.allFavorites});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +20,17 @@ class FavoritePokemonList extends StatelessWidget {
              if (state is FavoritePokemonList) {
                return Column(
                  children: [
-                   ListView.builder(
-                       itemCount: allFavorites?.length ?? 0,
-                       itemBuilder: (context, index) {
-
-                       })
+                   Expanded(
+                     child: ListView.builder(
+                       scrollDirection: Axis.vertical,
+                         shrinkWrap: true,
+                         itemCount: allFavorites.length,
+                         itemBuilder: (context, index) {
+                       return ListTile(
+                         title:Text(allFavorites[index].name!),
+                       );
+                         }),
+                   )
                  ],
                );
              }else{

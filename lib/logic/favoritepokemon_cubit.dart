@@ -6,8 +6,10 @@ import '../repository/pokemon_repository.dart';
 
 class FavoritePokemonCubit extends Cubit<FavoritePokemonState>{
   final PokemonRepository repository;
-  late final List<Pokemon> allFavorites;
-  FavoritePokemonCubit(this.repository):super(FavoritePokemonList([]));
+  final List<Pokemon> allFavorites = [];
+  FavoritePokemonCubit(this.repository):super(FavoritePokemonList([])){
+    loadFavoritePokemon();
+  }
 
   void loadFavoritePokemon() async{
     final favoritePokemonList = await repository.getFavoritePokemons(allFavorites);
