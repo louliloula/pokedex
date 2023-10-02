@@ -8,8 +8,8 @@ import '../model/pokemon.dart';
 
 class FavoritePokemonList extends StatelessWidget {
   final PokemonRepository repository;
- final List<Pokemon> allFavorites;
-  const FavoritePokemonList({super.key,required this.repository, required this.allFavorites});
+
+  const FavoritePokemonList({super.key,required this.repository});
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +18,7 @@ class FavoritePokemonList extends StatelessWidget {
          child: BlocBuilder<FavoritePokemonCubit,FavoritePokemonState>(
            builder: (blocContext,state) {
              if (state is FavoritePokemonList) {
-               return Column(
-                 children: [
-                   Expanded(
-                     child: ListView.builder(
-                       scrollDirection: Axis.vertical,
-                         shrinkWrap: true,
-                         itemCount: allFavorites.length,
-                         itemBuilder: (context, index) {
-                       return ListTile(
-                         title:Text(allFavorites[index].name!),
-                       );
-                         }),
-                   )
-                 ],
-               );
+               return FavoriteList(allFavorites:[]);
              }else{
                return Center(
                 child: Text("Vous n'avez pas de pokemons favoris")
@@ -44,4 +30,28 @@ class FavoritePokemonList extends StatelessWidget {
   }
 }
 
+class FavoriteList extends StatelessWidget{
+  FavoriteList({super.key,required this.allFavorites});
+  final List<Pokemon> allFavorites;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: allFavorites.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title:Text(allFavorites[index].name!),
+                );
+              }),
+        )
+      ],
+    );
+  }
+
+}
 

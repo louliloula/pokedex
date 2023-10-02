@@ -9,6 +9,10 @@ abstract class FavoritePokemonState extends Equatable{
 
 }
 
+class FavoritePokemonInitial extends FavoritePokemonState{
+  FavoritePokemonInitial();
+}
+
 class FavoritePokemonList extends FavoritePokemonState{
   List <Pokemon> favoritePokemonList;
   FavoritePokemonList(this.favoritePokemonList);

@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                 RepositoryProvider(create: (context)=> repository,
                 child: PokemonListScreen(repository: repository,),
                 ),RepositoryProvider(create: (context)=> repository,
-            child: FavoritePokemonList(repository: repository,allFavorites: [],),
+            child: FavoritePokemonList(repository: repository),
 
                 )]),
 
