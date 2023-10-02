@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/repository/pokemon_repository.dart';
+import 'package:pokedex/screen/favoritepokemonlist.dart';
 import 'package:pokedex/screen/pokemonhome_screen.dart';
 import 'package:pokedex/screen/pokemonlist_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,14 +39,16 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: DefaultTabController(
-          length: 2,
+          length: 3,
           child: Scaffold(
             appBar: AppBar(
               toolbarHeight: 15,
               backgroundColor: Colors.white,
               bottom: TabBar(tabs: [
                 Tab(icon: Icon(Icons.catching_pokemon_outlined,color: Colors.grey,),),
-                Tab(icon: Icon(Icons.library_books,color: Colors.grey,),)
+                Tab(icon: Icon(Icons.library_books,color: Colors.grey,),),
+                Tab(icon: Icon(Icons.favorite,color: Colors.grey,),),
+
               ],
               ),
 
@@ -57,8 +60,11 @@ class MyApp extends StatelessWidget {
             child :PokemonHomeScreen(repository: repository,),
           ),
                 RepositoryProvider(create: (context)=> repository,
-                child: PokemonListScreen(repository: repository,),)
-    ]),
+                child: PokemonListScreen(repository: repository,),
+                ),RepositoryProvider(create: (context)=> repository,
+            child: FavoritePokemonList(repository: repository,),
+
+                )]),
 
             ),
         ),

@@ -62,10 +62,7 @@ class PokemonListCubit extends Cubit<PokemonListState> {
       temp.sort((a, b) =>
           b.name!.compareTo(a.name!));
     }
-    else if(sortAZ == 2){
-
-    }
-    else if (sortAZ == 3) {
+    else if (sortAZ == 2) {
       loadPokemonList();
     }
 

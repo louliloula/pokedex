@@ -17,12 +17,13 @@ class PokemonDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PokemonDetailCubit(repository,pokemon),
+      create: (context) => PokemonDetailCubit(repository, pokemon),
       child: Material(
         child: Padding(
           padding: const EdgeInsets.only(top: 75),
           child: BlocBuilder<PokemonDetailCubit, PokemonDetailState>(
-            builder: (blocContext, state) {
+              builder: (blocContext, state) {
+            if (state is PokemonDetail) {
               return Column(
                 children: [
                   Row(
@@ -48,22 +49,24 @@ class PokemonDetailScreen extends StatelessWidget {
                                 alignment: Alignment.topRight,
                                 child: IconButton(
                                   icon: Icon(
-                                   state is FavouritePokemonHeart
+                                  state.isFavorite
                                         ? Icons.favorite
-                                        : Icons.favorite_border,
-                                   //color : pokemon.isFavorite
-                                    color: state is FavouritePokemonHeart
+                                        :Icons.favorite_border,
+                                    //color : pokemon.isFavorite
+                                    color: state.isFavorite
                                         ? Colors.red
                                         : Colors.grey,
                                   ),
                                   onPressed: () {
                                     blocContext
                                         .read<PokemonDetailCubit>()
-                                        .favouritePokemon();
+                                        .displayPokemon();
                                   },
-                                )),
-                            Image(image: NetworkImage(pokemon.imageUrl!)),
-                            Text(pokemon.name!,
+                                )
+                            ),
+
+                            Image(image: NetworkImage(state.pokemon.imageUrl!)),
+                            Text(state.pokemon.name!,
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                             Divider(
                               thickness: 3,
@@ -79,10 +82,10 @@ class PokemonDetailScreen extends StatelessWidget {
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: pokemon.types!.length,
+                                  itemCount: state.pokemon.types!.length,
                                   itemBuilder: (context, index) {
                                     return PokemonTypeChip(
-                                        type: pokemon.types![index]);
+                                        type: state.pokemon.types![index]);
                                   }),
                             ),
                             SizedBox(
@@ -92,7 +95,7 @@ class PokemonDetailScreen extends StatelessWidget {
                               padding: EdgeInsets.only(
                                   left: 13, right: 13, bottom: 15),
                               child: Text(
-                                pokemon.description!,
+                                state.pokemon.description!,
                                 textAlign: TextAlign.justify,
                               ),
                             ),
@@ -103,8 +106,10 @@ class PokemonDetailScreen extends StatelessWidget {
                   ),
                 ],
               );
-            },
-          ),
+            } else {
+              return Text("Erreur");
+            }
+          }),
         ),
       ),
     );

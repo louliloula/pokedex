@@ -7,21 +7,30 @@ import '../model/pokemon.dart';
 
 class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   final PokemonRepository repository;
+  bool isFavorite=false;
+  final Pokemon pokemon;
 
-  PokemonDetailCubit(this.repository,this.pokemon)
-      :super(const PokemonDetailScreenInitial());
-   final Pokemon pokemon;
-  //late List<Pokemon> pokemon;
-  bool isFavorite = false;
-
+  PokemonDetailCubit(this.repository, this.pokemon)
+      :super(PokemonDetail(false, pokemon));
 
 
-  void favouritePokemon() {
-    //gestion du clique sur le pokemon
-    //passer d'un etat à un autre
+  // //add methode d'envoie sur liste
+  // void favouritePokemon() {
+  //   bool isFavorite = false;
+  //   isFavorite = !isFavorite;
+  //   //repository.updateFavoritePokemon(pokemon);
+  //   emit(FavouritePokemonHeart(isFavorite, pokemon));
+  // }
 
-      repository.updateFavoritePokemon(pokemon);
-      emit(FavouritePokemonHeart(pokemon, true));
-    }
+  //repository.updateFavoritePokemon(pokemon);
+
+
+  void displayPokemon() async {
+    await repository.updateFavoritePokemon(pokemon);
+    isFavorite = !isFavorite;
+    print(isFavorite);
+    emit(PokemonDetail(isFavorite,pokemon));
+
+
   }
-
+}

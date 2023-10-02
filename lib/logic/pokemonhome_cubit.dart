@@ -13,7 +13,7 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
 
 
   final PokemonRepository repository;
-  late List<Pokemon> pokemonList;
+  late List<Pokemon> pokemonRandomList;
   late Timer timer;
 
 
@@ -40,7 +40,7 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
     // if (kDebugMode) {
     //   print('Pokemon généré : ${randomPokemon.name}');
     // }
-    emit(GeneratorPokemonSucess(randomPokemon,pokemonList));
+    emit(GeneratorPokemonSucess(randomPokemon,pokemonRandomList));
 
   }
 
@@ -50,13 +50,15 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
 
 
   Future<void> myPokemonListWallet() async{
-    pokemonList = [];
+    pokemonRandomList = [];
+
     for(int i = 0 ; i < 3 ; i++){
        final myRandomPokemon = await repository.generateRandomPokemon();
+
        if (kDebugMode) {
          print('Pokemon généré : ${myRandomPokemon.name}');
        }
-       pokemonList.add(myRandomPokemon);
+       pokemonRandomList.add(myRandomPokemon);
     }
   }
 

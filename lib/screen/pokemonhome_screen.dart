@@ -23,10 +23,9 @@ class PokemonHomeScreen extends StatelessWidget {
         child: BlocBuilder<PokemonHomeCubit, PokemonHomeState>(
           builder: (blocContext, state) {
             if (state is PokemonLoading) {
-              return CircularProgressIndicator();
+              return Center(
+                  child: CircularProgressIndicator());
             } else if (state is GeneratorPokemonSucess) {
-              final randomPokemon = state.randomPokemon;
-              final myPokemon = state.myPokemon;
               return Padding(
                 padding: const EdgeInsets.only(top: 35, left: 15),
                 child: Column(
@@ -54,9 +53,9 @@ class PokemonHomeScreen extends StatelessWidget {
                               child: ListTile(
                             title: Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text('Name : ${randomPokemon.name}'),
+                              child: Text('Name : ${state.randomPokemon.name}'),
                             ),
-                            subtitle: Text('${randomPokemon.description}'),
+                            subtitle: Text('${state.randomPokemon.description}'),
                           ))
                         ],
                       ),
@@ -67,16 +66,15 @@ class PokemonHomeScreen extends StatelessWidget {
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3),
-                      itemCount: myPokemon.length,
+                      itemCount: state.myPokemon.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: (){
                             Navigator.push(
                               context,MaterialPageRoute(
-                                builder: (context) =>PokemonDetailScreen(pokemon: myPokemon[index], repository: repository))
+                                builder: (context) =>PokemonDetailScreen(pokemon: state.myPokemon[index], repository: repository))
                             );
                           },
-                          child: Expanded(
                             child: Container(
                                 margin: EdgeInsets.all(7),
                                 decoration: BoxDecoration(
@@ -85,20 +83,20 @@ class PokemonHomeScreen extends StatelessWidget {
                                     border: Border.all(color: Colors.yellow),
                                     image: DecorationImage(
                                         image:
-                                            NetworkImage(myPokemon[index].imageUrl!))),
+                                            NetworkImage(state.myPokemon[index].imageUrl!))),
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                       left: 8.0, right: 8, top: 3),
-                                  child: Row(
+                                  child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(myPokemon[index].name!),
+                                      Text(state.myPokemon[index].name!),
                                       Spacer(),
-                                      Text('# ${myPokemon[index].nationalId}')
+                                      Text('# ${state.myPokemon[index].nationalId}')
                                     ],
                                   ),
                                 )),
-                          ),
+
                         );
                       },
                     )
@@ -116,3 +114,5 @@ class PokemonHomeScreen extends StatelessWidget {
     );
   }
 }
+
+

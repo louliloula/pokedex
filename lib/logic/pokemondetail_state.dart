@@ -11,18 +11,30 @@ class PokemonDetailState extends Equatable{
 class PokemonDetailScreenInitial extends PokemonDetailState{
   const PokemonDetailScreenInitial();
 }
-class FavouritePokemonHeart extends PokemonDetailState{
-  final Pokemon pokemon;
-  final bool isFavorite;
-  const FavouritePokemonHeart(this.pokemon,this.isFavorite);
 
-  @override
-
-  List<Object?> get props => [pokemon,isFavorite];
-}
 
 class PokemonFavoriteListLoading extends PokemonDetailState{
   const PokemonFavoriteListLoading();
+}
+class PokemonDetail extends PokemonDetailState{
+  final Pokemon pokemon;
+  final bool isFavorite;
+
+   PokemonDetail(this.isFavorite,this.pokemon);
+
+   @override
+  List<Object?> get props => [pokemon,isFavorite];
+
+}
+
+class FavouritePokemonHeart extends PokemonDetailState{
+  final bool isFavorite;
+  final Pokemon pokemon;
+  FavouritePokemonHeart(this.isFavorite,this.pokemon);
+
+  @override
+List<Object?> get props => [pokemon,isFavorite];
+
 }
 
 

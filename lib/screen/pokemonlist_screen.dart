@@ -69,9 +69,6 @@ class PokemonListScreen extends StatelessWidget {
                                  Text("Pokemon Z-A")),
                                PopupMenuItem(
                                    value : 2,child:
-                               Text("Pokemons favoris")),
-                               PopupMenuItem(
-                                   value : 3,child:
                                Text("Liste de pokemons")),
                                  ];
                                }
@@ -139,17 +136,19 @@ class PokemonList extends StatelessWidget{
                   child: Padding(
                     padding: EdgeInsets.only(left: 8.0,right: 8,top:3),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(pokemonList[index].name!),
                         Spacer(),
                         Text('# : ${pokemonList[index].nationalId}')
                       ],
-                    ),
-                  )
+                    ),),
 
-                )
+                ),
+
+
               );
+
           }),
 
     );
