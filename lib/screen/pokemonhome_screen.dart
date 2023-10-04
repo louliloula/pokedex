@@ -34,20 +34,22 @@ class PokemonHomeScreen extends StatelessWidget {
                     Text(
                       "Bonjour",
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                          TextStyle( fontSize: 28,fontFamily: 'RobotoMono'),
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 25,
                     ),
                     Card(
                       color: Colors.white,
+                      elevation: 5,
+                      shadowColor: Colors.grey,
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Image.network(
                             state.randomPokemon.imageUrl!,
                             height: (200),
-                            width: (70),
+                            width: (100),
                           ),
                           Expanded(
                               child: ListTile(
@@ -61,45 +63,50 @@ class PokemonHomeScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 45),
-                    GridView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3),
-                      itemCount: state.myPokemon.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,MaterialPageRoute(
-                                builder: (context) =>PokemonDetailScreen(pokemon: state.myPokemon[index], repository: repository))
-                            );
-                          },
-                            child: Container(
-                                margin: EdgeInsets.all(7),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.yellow),
-                                    image: DecorationImage(
-                                        image:
-                                            NetworkImage(state.myPokemon[index].imageUrl!))),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8, top: 3),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(state.myPokemon[index].name!),
-                                      Spacer(),
-                                      Text('# ${state.myPokemon[index].nationalId}')
-                                    ],
-                                  ),
-                                )),
-
-                        );
-                      },
-                    )
+                    Text("Mes pokemons",
+                      style:
+                      TextStyle(fontSize:20,),),
+                    SizedBox(height: 20,),
+                    // GridView.builder(
+                    //   scrollDirection: Axis.vertical,
+                    //   shrinkWrap: true,
+                    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    //       crossAxisCount: 3),
+                    //   itemCount: state.myPokemon.length,
+                    //   itemBuilder: (context, index) {
+                    //     return GestureDetector(
+                    //       onTap: (){
+                    //         Navigator.push(
+                    //           context,MaterialPageRoute(
+                    //             builder: (context) =>PokemonDetailScreen(pokemon: state.myPokemon[index], repository: repository))
+                    //         );
+                    //       },
+                    //         child: Container(
+                    //             margin: EdgeInsets.all(7),
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(15),
+                    //                 color: Colors.white,
+                    //                 border: Border.all(color: Colors.yellow),
+                    //                 image: DecorationImage(
+                    //                     image:
+                    //                         NetworkImage(state.myPokemon[index].imageUrl!))),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.only(
+                    //                   left: 8.0, right: 8, top: 3),
+                    //               child: Column(
+                    //                 crossAxisAlignment: CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   Text(state.myPokemon[index].name!),
+                    //                   Spacer(),
+                    //                   Text('# ${state.myPokemon[index].nationalId}')
+                    //                 ],
+                    //               ),
+                    //             )),
+                    //
+                    //     );
+                    //   },
+                    // )
+                    MyPokemonCard(myPokemon:state.myPokemon,repository: repository,)
                   ],
                 ),
               );
@@ -114,5 +121,53 @@ class PokemonHomeScreen extends StatelessWidget {
     );
   }
 }
+ class MyPokemonCard extends StatelessWidget{
+   final List<Pokemon> myPokemon;
+   final PokemonRepository repository;
+  MyPokemonCard({super.key, required this.myPokemon, required this.repository});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2.5,
+              mainAxisSpacing: 3
+            ),itemCount: myPokemon.length,
+            itemBuilder: (context,index){
+              return GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,MaterialPageRoute(
+                      builder: (context) =>PokemonDetailScreen(pokemon: myPokemon[index], repository: repository))
+                  );
+                },
+                  child: Card(
+                    color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Colors.blueGrey
+                          )
+                        ),
+                        child: ListTile(
+                          leading: Image.network(myPokemon[index].imageUrl!,
+                           ),
+                          title: Text(myPokemon[index].name!,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,),
+                          subtitle: Text(myPokemon[index].types!.join("-")),
+
+                        ),
+
+
+                  ),
+
+
+              );
+            }));
+  }
+
+ }
 
 

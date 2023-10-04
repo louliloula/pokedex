@@ -13,12 +13,14 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState>{
   }
 
   void loadFavoritePokemon() async{
-    allFavorites = [];
-    final Pokemon pokemon;
+    //allFavorites = [];
+    //final Pokemon pokemon;
    //Ajouter dans la liste un pokemon
+
     final favoritePokemonList = await repository.getFavoritePokemons(allFavorites);
     print('il y a :$favoritePokemonList');
     emit(FavoritePokemonList(favoritePokemonList));
+
   }
 
 }

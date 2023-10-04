@@ -80,13 +80,15 @@ class PokemonRepository {
 
     return favoritePokemons;
 
-
   }
+
+
    //fonction Set et Get pour le randomPokemon
 
 
   Future <Pokemon> generateRandomPokemon()async{
     List<Pokemon>? pokemonList;
+
 
     pokemonList ??= await getPokemonListFromLocal();
 

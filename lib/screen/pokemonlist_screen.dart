@@ -6,6 +6,7 @@ import 'package:pokedex/screen/pokemondetail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/pokemon.dart';
+import '../model/pokemon_type.dart';
 import '../repository/pokemon_repository.dart';
 
 class PokemonListScreen extends StatelessWidget {
@@ -100,57 +101,125 @@ class PokemonListScreen extends StatelessWidget {
   }
 }
 
+// class PokemonList extends StatelessWidget{
+//   PokemonList({super.key,required this.pokemonList, required this.repository});
+//
+//   final PokemonRepository repository;
+//  final List<Pokemon> pokemonList;
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//       child: GridView.builder(
+//         scrollDirection: Axis.vertical,
+//           shrinkWrap: true,
+//           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//               crossAxisCount: 2, crossAxisSpacing: 5,mainAxisSpacing: 5),
+//           itemCount: pokemonList.length,
+//           itemBuilder: (context,index){
+//               return GestureDetector(
+//                 onTap:(){
+//                   Navigator.push(
+//                       context, MaterialPageRoute(
+//                       builder: (context)=>PokemonDetailScreen(pokemon : pokemonList[index] , repository: repository,)));
+//                 },
+//                 child: Container(
+//                   margin: EdgeInsets.all(7),
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(15),
+//                     color: Colors.white,
+//                     border: Border.all(color: Colors.yellow),
+//                     image: DecorationImage(
+//                       image: NetworkImage(pokemonList[index].imageUrl!)
+//                     )
+//                   ),
+//                   child: Padding(
+//                     padding: EdgeInsets.only(left: 8.0,right: 8,top:3),
+//                     child: Row(
+//                       crossAxisAlignment: CrossAxisAlignment.end,
+//                       children: [
+//                         Text(pokemonList[index].name!),
+//                         Spacer(),
+//                         Text('# : ${pokemonList[index].nationalId}')
+//                       ],
+//                     ),),
+//
+//                 ),
+//
+//
+//               );
+//
+//           }),
+//
+//     );
+//   }
+//
+// }
 class PokemonList extends StatelessWidget{
-  PokemonList({super.key,required this.pokemonList, required this.repository});
-
   final PokemonRepository repository;
- final List<Pokemon> pokemonList;
+  final List<Pokemon> pokemonList;
+
+
+   PokemonList({super.key, required this.repository, required this.pokemonList});
 
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.builder(
-        scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 5,mainAxisSpacing: 5),
-          itemCount: pokemonList.length,
-          itemBuilder: (context,index){
+        child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,mainAxisSpacing: 5
+            ), itemCount: pokemonList.length,
+            itemBuilder: (context,index){
               return GestureDetector(
                 onTap:(){
                   Navigator.push(
                       context, MaterialPageRoute(
                       builder: (context)=>PokemonDetailScreen(pokemon : pokemonList[index] , repository: repository,)));
                 },
-                child: Container(
-                  margin: EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                    border: Border.all(color: Colors.yellow),
-                    image: DecorationImage(
-                      image: NetworkImage(pokemonList[index].imageUrl!)
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.black12
                     )
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 8.0,right: 8,top:3),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                  margin: EdgeInsets.all(7),
+                  child: Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(5),
+                    child: Stack(
                       children: [
-                        Text(pokemonList[index].name!),
-                        Spacer(),
-                        Text('# : ${pokemonList[index].nationalId}')
+                        Column(
+                          children: [
+                            Expanded(
+                              child: Image.network(pokemonList[index].imageUrl!,fit: BoxFit.fill,),
+                            ),
+                            Row(
+                              children: [
+                                Text(pokemonList[index].name!),
+                                Spacer(),
+                                Text('# ${pokemonList[index].nationalId}')
+                              ],
+                            )
+
+                          ],
+
+                        ),
+
                       ],
-                    ),),
+                    ),
+                  ),
 
                 ),
 
-
               );
 
-          }),
-
+            })
     );
   }
 
