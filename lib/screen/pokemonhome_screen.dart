@@ -93,10 +93,10 @@ class MyPokemonCard extends StatelessWidget {
         child: Container(
           height: 200,
           decoration: BoxDecoration(
-              color: Colors.white60,
+              color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.amberAccent,
+                  color: Colors.black26,
                   offset: Offset(0,0),
                   spreadRadius: 0,
                   blurRadius: 10
@@ -104,8 +104,8 @@ class MyPokemonCard extends StatelessWidget {
               ],
 
               borderRadius: BorderRadius.only(
-                topRight: Radius.circular(35),
-                topLeft: Radius.circular(35),
+                topRight: Radius.circular(25),
+                topLeft: Radius.circular(25),
               )),
           child: Column(
             children: [
