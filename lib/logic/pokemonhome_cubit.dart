@@ -20,7 +20,7 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
   void spawnPokemonPerHour() async {
     await myPokemonListWallet();
     await emitRandomPokemon();
-    timer = Timer.periodic(Duration(seconds: 10), (timer) async {
+    timer = Timer.periodic(Duration(seconds: 60), (timer) async {
       try{
         await emitRandomPokemon();
 

@@ -18,8 +18,8 @@ class PokemonHomeScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => PokemonHomeCubit(context.read<PokemonRepository>())
         ..spawnPokemonPerHour(),
-      child: Padding(
-        padding: EdgeInsets.all(8),
+      // child: Padding(
+      //   padding: EdgeInsets.all(8),
         child: BlocBuilder<PokemonHomeCubit, PokemonHomeState>(
           builder: (blocContext, state) {
             if (state is PokemonLoading) {
@@ -27,15 +27,15 @@ class PokemonHomeScreen extends StatelessWidget {
                   child: CircularProgressIndicator());
             } else if (state is GeneratorPokemonSucess) {
               return Padding(
-                padding: const EdgeInsets.only(top: 35, left: 15),
+                padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Bonjour",
-                      style:
-                          TextStyle( fontSize: 28,fontFamily: 'RobotoMono'),
-                    ),
+                      Text(
+                        "Bonjour",
+                        style:
+                            TextStyle( fontSize: 28,fontFamily: 'RobotoMono'),
+                      ),
                     SizedBox(
                       height: 25,
                     ),
@@ -48,8 +48,8 @@ class PokemonHomeScreen extends StatelessWidget {
                         children: [
                           Image.network(
                             state.randomPokemon.imageUrl!,
-                            height: (200),
-                            width: (100),
+                            height: 180,
+                            width: 90,
                           ),
                           Expanded(
                               child: ListTile(
@@ -62,51 +62,32 @@ class PokemonHomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 45),
-                    Text("Mes pokemons",
-                      style:
-                      TextStyle(fontSize:20,),),
-                    SizedBox(height: 20,),
-                    // GridView.builder(
-                    //   scrollDirection: Axis.vertical,
-                    //   shrinkWrap: true,
-                    //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //       crossAxisCount: 3),
-                    //   itemCount: state.myPokemon.length,
-                    //   itemBuilder: (context, index) {
-                    //     return GestureDetector(
-                    //       onTap: (){
-                    //         Navigator.push(
-                    //           context,MaterialPageRoute(
-                    //             builder: (context) =>PokemonDetailScreen(pokemon: state.myPokemon[index], repository: repository))
-                    //         );
-                    //       },
-                    //         child: Container(
-                    //             margin: EdgeInsets.all(7),
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(15),
-                    //                 color: Colors.white,
-                    //                 border: Border.all(color: Colors.yellow),
-                    //                 image: DecorationImage(
-                    //                     image:
-                    //                         NetworkImage(state.myPokemon[index].imageUrl!))),
-                    //             child: Padding(
-                    //               padding: EdgeInsets.only(
-                    //                   left: 8.0, right: 8, top: 3),
-                    //               child: Column(
-                    //                 crossAxisAlignment: CrossAxisAlignment.start,
-                    //                 children: [
-                    //                   Text(state.myPokemon[index].name!),
-                    //                   Spacer(),
-                    //                   Text('# ${state.myPokemon[index].nationalId}')
-                    //                 ],
-                    //               ),
-                    //             )),
-                    //
-                    //     );
-                    //   },
-                    // )
-                    MyPokemonCard(myPokemon:state.myPokemon,repository: repository,)
+
+                    SizedBox(height: 25),
+                      Container(
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text("Mes pokemons",
+                                  style:
+                                  TextStyle(fontSize:20,),),
+                            ),
+                            SizedBox(height: 20,),
+                            MyPokemonCard(myPokemon:state.myPokemon,repository: repository,),
+                          ],
+
+                        ),
+                      ),
+
                   ],
                 ),
               );
@@ -116,9 +97,9 @@ class PokemonHomeScreen extends StatelessWidget {
               return Text("Aucune donnée disponible");
             }
           },
-        ),
-      ),
-    );
+        ));
+      //),
+    //);
   }
 }
  class MyPokemonCard extends StatelessWidget{

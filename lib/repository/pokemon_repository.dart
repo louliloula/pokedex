@@ -48,6 +48,7 @@ class PokemonRepository {
   //mettre a jour la mise en favori d un pokemon dans la liste des pokemons
   Future<void> updateFavoritePokemon(Pokemon pokemon) async {
     //Liste de pokemons favoris vide
+    final prefs = await SharedPreferences.getInstance();
     final List<String> favoritePokemon = prefs.getStringList(
         'favoritePokemon') ?? [];
     print(favoritePokemon);
@@ -82,19 +83,22 @@ class PokemonRepository {
 
   }
 
-
-   //fonction Set et Get pour le randomPokemon
+  Future<void> saveRandomPokemonList(Pokemon pokemon) async {
+    final prefs = await SharedPreferences.getInstance();
+    final pokemonListJson = json.encode(pokemon.toJson());
+    await prefs.setString('randomPokemonList', pokemonListJson);
+  }
 
 
   Future <Pokemon> generateRandomPokemon()async{
-    List<Pokemon>? pokemonList;
+    //List<Pokemon>? pokemonList;
 
-
-    pokemonList ??= await getPokemonListFromLocal();
-
+    final pokemonList = await getPokemonListFromLocal();
     final random = Random();
     final randomIndex = random.nextInt(pokemonList.length);
-    return pokemonList[randomIndex];
+    final randomPokemon = pokemonList[randomIndex];
+    await saveRandomPokemonList(randomPokemon);
+    return randomPokemon;
   }
 
 
