@@ -10,84 +10,65 @@ import '../repository/pokemon_repository.dart';
 class PokemonHomeScreen extends StatelessWidget {
   final PokemonRepository repository;
 
-
   const PokemonHomeScreen({super.key, required this.repository});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PokemonHomeCubit(context.read<PokemonRepository>())
-        ..spawnPokemonPerHour(),
-      // child: Padding(
-      //   padding: EdgeInsets.all(8),
+        create: (context) => PokemonHomeCubit(context.read<PokemonRepository>())
+          ..spawnPokemonPerHour(),
         child: BlocBuilder<PokemonHomeCubit, PokemonHomeState>(
           builder: (blocContext, state) {
             if (state is PokemonLoading) {
-              return Center(
-                  child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             } else if (state is GeneratorPokemonSucess) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 25, left: 15, right: 15),
+              return Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                      Text(
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 25),
+                      child: Text(
                         "Bonjour",
                         style:
-                            TextStyle( fontSize: 28,fontFamily: 'RobotoMono'),
+                            TextStyle(fontSize: 28, fontFamily: 'RobotoMono'),
                       ),
+                    ),
                     SizedBox(
                       height: 25,
                     ),
-                    Card(
-                      color: Colors.white,
-                      elevation: 5,
-                      shadowColor: Colors.grey,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Image.network(
-                            state.randomPokemon.imageUrl!,
-                            height: 180,
-                            width: 90,
-                          ),
-                          Expanded(
-                              child: ListTile(
-                            title: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text('Name : ${state.randomPokemon.name}'),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 5,
+                        shadowColor: Colors.grey,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Image.network(
+                              state.randomPokemon.imageUrl!,
+                              height: 180,
+                              width: 90,
                             ),
-                            subtitle: Text('${state.randomPokemon.description}'),
-                          ))
-                        ],
+                            Expanded(
+                                child: ListTile(
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child:
+                                    Text('Name : ${state.randomPokemon.name}'),
+                              ),
+                              subtitle:
+                                  Text('${state.randomPokemon.description}'),
+                            ))
+                          ],
+                        ),
                       ),
                     ),
+                    SizedBox(height: 35),
 
-                    SizedBox(height: 25),
-                      Container(
-                        height: 300,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text("Mes pokemons",
-                                  style:
-                                  TextStyle(fontSize:20,),),
-                            ),
-                            SizedBox(height: 20,),
-                            MyPokemonCard(myPokemon:state.myPokemon,repository: repository,),
-                          ],
-
-                        ),
-                      ),
-
+                    MyPokemonCard(
+                        myPokemon: state.myPokemon, repository: repository)
                   ],
                 ),
               );
@@ -98,57 +79,80 @@ class PokemonHomeScreen extends StatelessWidget {
             }
           },
         ));
-      //),
-    //);
   }
 }
- class MyPokemonCard extends StatelessWidget{
-   final List<Pokemon> myPokemon;
-   final PokemonRepository repository;
+
+class MyPokemonCard extends StatelessWidget {
+  final List<Pokemon> myPokemon;
+  final PokemonRepository repository;
+
   MyPokemonCard({super.key, required this.myPokemon, required this.repository});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2.5,
-              mainAxisSpacing: 3
-            ),itemCount: myPokemon.length,
-            itemBuilder: (context,index){
-              return GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                      context,MaterialPageRoute(
-                      builder: (context) =>PokemonDetailScreen(pokemon: myPokemon[index], repository: repository))
-                  );
-                },
-                  child: Card(
-                    color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.blueGrey
-                          )
-                        ),
-                        child: ListTile(
-                          leading: Image.network(myPokemon[index].imageUrl!,
-                           ),
-                          title: Text(myPokemon[index].name!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,),
-                          subtitle: Text(myPokemon[index].types!.join("-")),
-
-                        ),
-
-
+        child: Container(
+          height: 280,
+          decoration: BoxDecoration(
+              color: Colors.deepOrangeAccent,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(35),
+                topLeft: Radius.circular(35),
+              )),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 15),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Mes pokemons",
+                    style: TextStyle(fontSize: 20),
                   ),
+                ),
+              ),
+              Expanded(
+                  child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2.5,
+                          mainAxisSpacing: 1),
+                      itemCount: myPokemon.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PokemonDetailScreen(
+                                        pokemon: myPokemon[index],
+                                        repository: repository)));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10, left: 10),
+                            child: Card(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.blueGrey)),
+                              child: ListTile(
+                                leading: Image.network(
+                                  myPokemon[index].imageUrl!,
+                                ),
+                                title: Text(
+                                  myPokemon[index].name!,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                subtitle: Text(myPokemon[index].types!.join("-")),
+                              ),
+                            ),
+                          ),
+                        );
+                      })),
+            ],
+          ),
+        ),
 
-
-              );
-            }));
+    );
   }
-
- }
-
-
+}
