@@ -94,7 +94,7 @@ class MyPokemonCard extends StatelessWidget {
         child: Container(
           height: 280,
           decoration: BoxDecoration(
-              color: Colors.deepOrangeAccent,
+              color: Colors.white60,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(35),
                 topLeft: Radius.circular(35),
