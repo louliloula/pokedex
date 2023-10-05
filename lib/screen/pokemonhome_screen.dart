@@ -66,6 +66,13 @@ class PokemonHomeScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 35),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20),),
+                      ),
+                    ),
                     MyPokemonCard(
                         myPokemon: state.myPokemon, repository: repository)
                   ],
@@ -91,7 +98,7 @@ class MyPokemonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-          height: 200,
+          //height: 100,
           decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -109,16 +116,16 @@ class MyPokemonCard extends StatelessWidget {
               )),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 15),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Mes pokemons",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
+               Padding(
+                padding: const EdgeInsets.only(top: 13),
+              //   child: Align(
+              //     alignment: Alignment.center,
+              //     child: Text(
+              //       "Mes pokemons",
+              //       style: TextStyle(fontSize: 20),
+              //     ),
+              //   ),
+               ),
               Expanded(
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
