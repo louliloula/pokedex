@@ -66,7 +66,6 @@ class PokemonHomeScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 35),
-
                     MyPokemonCard(
                         myPokemon: state.myPokemon, repository: repository)
                   ],
@@ -92,9 +91,18 @@ class MyPokemonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-          height: 280,
+          height: 200,
           decoration: BoxDecoration(
               color: Colors.white60,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.amberAccent,
+                  offset: Offset(0,0),
+                  spreadRadius: 0,
+                  blurRadius: 10
+                ),
+              ],
+
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(35),
                 topLeft: Radius.circular(35),
