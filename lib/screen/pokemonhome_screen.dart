@@ -29,7 +29,7 @@ class PokemonHomeScreen extends StatelessWidget {
                    end: AlignmentDirectional.bottomCenter,
                    colors:<Color>[
                      Colors.white,
-                     Colors.pink,
+                     Colors.black26,
 
                    ]
                  ),
@@ -38,15 +38,15 @@ class PokemonHomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 25),
+                      padding: const EdgeInsets.only(left: 15, top: 35),
                       child: Text(
-                        "Bonjour",
+                        "Pokemon du jour",
                         style:
-                            TextStyle(fontSize: 28, fontFamily: 'RobotoMono'),
+                            TextStyle(fontSize: 20, fontFamily: 'RobotoMono',color: Colors.blueGrey),
                       ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 18,
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10),
@@ -78,12 +78,11 @@ class PokemonHomeScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 35),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 18),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20,color: Colors.black12),),
+                      padding: const EdgeInsets.only(bottom: 18,left: 15),
+
+                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20,color: Colors.blueGrey),),
                       ),
-                    ),
+
                     MyPokemonCard(
                         myPokemon: state.myPokemon, repository: repository)
                   ],
