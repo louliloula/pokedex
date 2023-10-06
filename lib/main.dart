@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
               toolbarHeight: 15,
               backgroundColor: Colors.white,
               bottom: TabBar(tabs: [
-                Tab(icon: Icon(Icons.catching_pokemon_outlined,color: Colors.grey,),),
-                Tab(icon: Icon(Icons.library_books,color: Colors.grey,),),
-                Tab(icon: Icon(Icons.favorite,color: Colors.grey,),),
+                Tab(icon: Icon(Icons.other_houses_outlined,color: Colors.blueGrey,),),
+                Tab(icon: Icon(Icons.list_alt_outlined,color: Colors.blueGrey,),),
+                Tab(icon: Icon(Icons.favorite_border,color: Colors.blueGrey,),),
 
               ],
               ),

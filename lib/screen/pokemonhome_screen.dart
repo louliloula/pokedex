@@ -29,7 +29,7 @@ class PokemonHomeScreen extends StatelessWidget {
                    end: AlignmentDirectional.bottomCenter,
                    colors:<Color>[
                      Colors.white,
-                     Colors.black26,
+                     Colors.blueGrey,
 
                    ]
                  ),
@@ -123,7 +123,7 @@ class MyPokemonCard extends StatelessWidget {
                 BoxShadow(
                   color: Colors.black26,
                   offset: Offset(0,0),
-                  spreadRadius: 0,
+                  spreadRadius: 5,
                   blurRadius: 10
                 ),
               ],
