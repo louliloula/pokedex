@@ -167,6 +167,9 @@ class MyPokemonCard extends StatelessWidget {
                             child: Card(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5)
+                                ),
                                   side: BorderSide(color: Colors.blueGrey)),
                               child: ListTile(
                                 leading: Image.network(
