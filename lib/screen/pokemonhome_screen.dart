@@ -23,6 +23,17 @@ class PokemonHomeScreen extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             } else if (state is GeneratorPokemonSucess) {
               return Container(
+               decoration: BoxDecoration(
+                 gradient: LinearGradient(
+                   begin: AlignmentDirectional.center,
+                   end: AlignmentDirectional.bottomCenter,
+                   colors:<Color>[
+                     Colors.white,
+                     Colors.pink,
+
+                   ]
+                 ),
+               ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -70,7 +81,7 @@ class PokemonHomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 18),
                       child: Align(
                         alignment: Alignment.center,
-                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20),),
+                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20,color: Colors.black12),),
                       ),
                     ),
                     MyPokemonCard(
@@ -100,6 +111,14 @@ class MyPokemonCard extends StatelessWidget {
         child: Container(
           //height: 100,
           decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: AlignmentDirectional.topCenter,
+              end: AlignmentDirectional.bottomCenter,
+              colors: <Color>[
+                Colors.white,
+                Colors.redAccent
+              ]
+            ),
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
