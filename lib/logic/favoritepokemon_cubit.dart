@@ -9,12 +9,13 @@ class FavoritePokemonCubit extends Cubit<FavoritePokemonState>{
   late List<Pokemon> allFavorites;
 
   FavoritePokemonCubit(this.repository):super(FavoritePokemonInitial()){
+    allFavorites = [];
     loadFavoritePokemon();
   }
 
   void loadFavoritePokemon() async{
     //allFavorites = [];
-    //final Pokemon pokemon;
+    final Pokemon pokemon;
    //Ajouter dans la liste un pokemon
 
     final favoritePokemonList = await repository.getFavoritePokemons(allFavorites);

@@ -65,9 +65,9 @@ class PokemonHomeScreen extends StatelessWidget {
                             Expanded(
                                 child: ListTile(
                               title: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
+                                padding: const EdgeInsets.only(bottom: 8.0,top: 5),
                                 child:
-                                    Text('Name : ${state.randomPokemon.name}'),
+                                    Text('Nom : ${state.randomPokemon.name}'),
                               ),
                               subtitle:
                                   Text('${state.randomPokemon.description}'),
@@ -80,7 +80,7 @@ class PokemonHomeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 18,left: 15),
 
-                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20,color: Colors.blueGrey),),
+                        child: Text("Mes pokemons",style: TextStyle(fontSize: 20,color: Colors.blueGrey,fontFamily: 'RobotoMono'),),
                       ),
 
                     MyPokemonCard(
@@ -108,7 +108,7 @@ class MyPokemonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Container(
-          //height: 100,
+          //height: 200,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: AlignmentDirectional.topCenter,

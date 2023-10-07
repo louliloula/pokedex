@@ -29,6 +29,7 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('favorite_${pokemon.sId}', isFavorite);
     print(isFavorite);
+
     emit(PokemonDetail(isFavorite,pokemon));
 
 

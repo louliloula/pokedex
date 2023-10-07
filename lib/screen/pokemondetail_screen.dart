@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/logic/pokemondetail_cubit.dart';
 import 'package:pokedex/repository/pokemon_repository.dart';
+import 'package:pokedex/screen/favoritepokemonlist.dart';
 
 import '../logic/pokemondetail_state.dart';
 import '../model/pokemon.dart';
@@ -20,7 +21,7 @@ class PokemonDetailScreen extends StatelessWidget {
       create: (context) => PokemonDetailCubit(repository, pokemon),
       child: Material(
         child: Padding(
-          padding: const EdgeInsets.only(top: 75),
+          padding: const EdgeInsets.only(top: 45,left: 15),
           child: BlocBuilder<PokemonDetailCubit, PokemonDetailState>(
               builder: (blocContext, state) {
             if (state is PokemonDetail) {
@@ -32,16 +33,15 @@ class PokemonDetailScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.arrow_back)),
-                      Text("Retour"),
+                          icon: Icon(Icons.arrow_back, color: Colors.blueGrey,)),
                     ],
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                     child: Padding(
+                       padding: EdgeInsets.only(right: 15),
                       child: Card(
                         child: Column(
                           children: [
@@ -52,20 +52,20 @@ class PokemonDetailScreen extends StatelessWidget {
                                   state.isFavorite
                                         ? Icons.favorite
                                         :Icons.favorite_border,
-                                    //color : pokemon.isFavorite
                                     color: state.isFavorite
                                         ? Colors.red
-                                        : Colors.grey,
+                                        : Colors.blueGrey,
                                   ),
                                   onPressed: () {
                                     blocContext
                                         .read<PokemonDetailCubit>()
                                         .displayPokemon();
+
                                   },
                                 )
                             ),
 
-                            Image(image: NetworkImage(state.pokemon.imageUrl!)),
+                            Image(image: NetworkImage(state.pokemon.imageUrl!),fit: BoxFit.fill,),
                             Text(state.pokemon.name!,
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                             Divider(
@@ -115,6 +115,9 @@ class PokemonDetailScreen extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class PokemonTypeChip extends StatelessWidget {
   final String type;
