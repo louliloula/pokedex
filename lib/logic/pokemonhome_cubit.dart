@@ -25,9 +25,7 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
         await emitRandomPokemon();
 
       }catch(e){
-        // if (kDebugMode) {
-        //   print('Erreur erreur');
-        // }
+
         emit(GeneratorPokemonError("Erreur lors de la géneration de pokemon"));
       }
     });
@@ -37,9 +35,7 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
 
   Future<void> emitRandomPokemon() async {
     final randomPokemon = await repository.generateRandomPokemon();
-    // if (kDebugMode) {
-    //   print('Pokemon généré : ${randomPokemon.name}');
-    // }
+
     emit(GeneratorPokemonSucess(randomPokemon,pokemonRandomList));
 
   }
@@ -55,9 +51,6 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState>{
     for(int i = 0 ; i < 3 ; i++){
        final myRandomPokemon = await repository.generateRandomPokemon();
 
-       if (kDebugMode) {
-         print('Pokemon généré : ${myRandomPokemon.name}');
-       }
        pokemonRandomList.add(myRandomPokemon);
     }
   }
