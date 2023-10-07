@@ -46,6 +46,7 @@ class PokemonListCubit extends Cubit<PokemonListState> {
   //     print('Evolutions:');
   //     for (var evolution in pokemon.evolutions!) {
   //       print('- $evolution');
+  //        print(' - Level ${evolution.level}: ${evolution.to}'),
   //     }
   // }
 
