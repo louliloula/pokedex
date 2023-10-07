@@ -40,6 +40,15 @@ class PokemonListCubit extends Cubit<PokemonListState> {
     emit(PokemonListFilteredScreen(pokemon));
   }
 
+  // void test(){
+  //   for (var pokemon in _pokemonList) {
+  //     print('Pokemon: ${pokemon.name}');
+  //     print('Evolutions:');
+  //     for (var evolution in pokemon.evolutions!) {
+  //       print('- $evolution');
+  //     }
+  // }
+
   void filterPokemonListAlphabetically(int sortAZ) {
     List<Pokemon> temp = _pokemonList;
     emit(PokemonListLoading());
