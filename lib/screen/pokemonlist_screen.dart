@@ -166,6 +166,8 @@ class PokemonList extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Expanded(
         child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -178,43 +180,46 @@ class PokemonList extends StatelessWidget{
                       context, MaterialPageRoute(
                       builder: (context)=>PokemonDetailScreen(pokemon : pokemonList[index] , repository: repository,)));
                 },
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Colors.black12
-                    )
-                  ),
-                  margin: EdgeInsets.all(7),
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                child: Hero(
+                  tag: 'pokemon-${pokemonList[index].nationalId}',
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.black12
+                      )
                     ),
-                    margin: EdgeInsets.all(5),
-                    padding: EdgeInsets.all(5),
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Expanded(
-                              child: Image.network(pokemonList[index].imageUrl!,fit: BoxFit.fill,),
-                            ),
-                            Row(
-                              children: [
-                                Text(pokemonList[index].name!),
-                                Spacer(),
-                                Text('# ${pokemonList[index].nationalId}')
-                              ],
-                            )
+                    margin: EdgeInsets.all(7),
+                    child: Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(5),
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              Expanded(
+                                child: Image.network(pokemonList[index].imageUrl!,fit: BoxFit.fill,),
+                              ),
+                              Row(
+                                children: [
+                                  Text(pokemonList[index].name!),
+                                  Spacer(),
+                                  Text('# ${pokemonList[index].nationalId}')
+                                ],
+                              )
 
-                          ],
+                            ],
 
-                        ),
+                          ),
 
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
+                  ),
                 ),
 
               );

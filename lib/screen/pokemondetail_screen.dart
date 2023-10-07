@@ -29,11 +29,14 @@ class PokemonDetailScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back, color: Colors.blueGrey,)),
+                      Hero(
+                        tag: 'pokemon-${pokemon.nationalId}',
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back, color: Colors.blueGrey,)),
+                      ),
                     ],
                   ),
                   SizedBox(
