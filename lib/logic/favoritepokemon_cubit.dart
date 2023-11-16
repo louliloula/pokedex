@@ -1,27 +1,31 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/logic/favoritepokemon_state.dart';
+import 'package:pokedex/model/pokemonWrapper.dart';
 
 import '../model/pokemon.dart';
 import '../repository/pokemon_repository.dart';
+import '../usecase/pokemon_usecase.dart';
 
 class FavoritePokemonCubit extends Cubit<FavoritePokemonState>{
-  final PokemonRepository repository;
-  late List<Pokemon> allFavorites;
+  final PokemonUseCase useCase;
 
-  FavoritePokemonCubit(this.repository):super(FavoritePokemonInitial()){
-    allFavorites = [];
-    loadFavoritePokemon();
-  }
+  FavoritePokemonCubit( this.useCase):super(FavoritePokemonInitial());
 
-  void loadFavoritePokemon() async{
-    //allFavorites = [];
-    final Pokemon pokemon;
-   //Ajouter dans la liste un pokemon
 
-    final favoritePokemonList = await repository.getFavoritePokemons(allFavorites);
-    print('il y a :$favoritePokemonList');
-    emit(FavoritePokemonList(favoritePokemonList));
+  void displayFavoritePokemonList() async{
+    //final favoritePokemonList = await repository.getFavoritePokemons();
+    final favoritePokemonList = await useCase.getFavoritePokemonsWrapper();
+    emit(ListOfFavoritePokemon(favoritePokemonList));
 
   }
+
+  void removePokemonFromFavoriteList(PokemonWrapper pokemonWrapper) async {
+    await useCase.toogleFavoritePokemons(pokemonWrapper);
+     displayFavoritePokemonList();
+
+  }
+
 
 }
+

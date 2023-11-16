@@ -1,41 +1,30 @@
 import 'package:equatable/equatable.dart';
 import 'package:pokedex/model/pokemon.dart';
 
-class PokemonDetailState extends Equatable{
+import '../model/pokemonWrapper.dart';
+
+class PokemonDetailState extends Equatable {
   const PokemonDetailState();
 
   @override
   List<Object?> get props => [];
-
 }
-class PokemonDetailScreenInitial extends PokemonDetailState{
+
+class PokemonDetailScreenInitial extends PokemonDetailState {
   const PokemonDetailScreenInitial();
 }
 
-
-class PokemonFavoriteListLoading extends PokemonDetailState{
-  const PokemonFavoriteListLoading();
-}
-class PokemonDetail extends PokemonDetailState{
-  final Pokemon pokemon;
+class PokemonDetail extends PokemonDetailState {
+  //final Pokemon pokemon;
   final bool isFavorite;
+  final PokemonWrapper pokemonWrapper;
 
-   PokemonDetail(this.isFavorite,this.pokemon);
-
-   @override
-  List<Object?> get props => [pokemon,isFavorite];
-
-}
-
-class FavouritePokemonHeart extends PokemonDetailState{
-  final bool isFavorite;
-  final Pokemon pokemon;
-  FavouritePokemonHeart(this.isFavorite,this.pokemon);
+  PokemonDetail(this.isFavorite, this.pokemonWrapper);
 
   @override
-List<Object?> get props => [pokemon,isFavorite];
-
+  List<Object?> get props => [pokemonWrapper, isFavorite];
 }
 
-
-
+class FutureEvolutionOfPokemon extends PokemonDetailState{
+  FutureEvolutionOfPokemon();
+}

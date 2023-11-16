@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class TypeColors {
+
+
   static const Map<String, Color> colors = {
     "normal": Colors.black12,
     "fire": Colors.red,
@@ -23,4 +25,5 @@ class TypeColors {
     "steel": Colors.blueGrey,
     "fairy": Colors.pinkAccent,
   };
+
 }

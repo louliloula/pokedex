@@ -1,24 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokedex/model/pokemonWrapper.dart';
 
 import '../model/pokemon.dart';
 
-abstract class FavoritePokemonState extends Equatable{
+abstract class FavoritePokemonState extends Equatable {
   const FavoritePokemonState();
+
   @override
   List<Object?> get props => [];
-
 }
 
-class FavoritePokemonInitial extends FavoritePokemonState{
+class FavoritePokemonInitial extends FavoritePokemonState {
   FavoritePokemonInitial();
 }
 
-class FavoritePokemonList extends FavoritePokemonState{
-  List <Pokemon> favoritePokemonList;
-  FavoritePokemonList(this.favoritePokemonList);
+class ListOfFavoritePokemon extends FavoritePokemonState {
+  List<PokemonWrapper> favoritePokemonList;
+  ListOfFavoritePokemon(this.favoritePokemonList);
 
   @override
-  List<Object?> get props => [];
-
-
+  List<Object?> get props => [favoritePokemonList];
 }

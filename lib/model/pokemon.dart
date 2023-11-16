@@ -11,7 +11,6 @@ class Pokemon  {
   String? imageUrl;
   List<String>? types;
   List<Evolutions>? evolutions;
-  //bool isFavorite = false;
 
   Pokemon(
       {required this.sId,
@@ -24,7 +23,7 @@ class Pokemon  {
         this.imageUrl,
         this.types,
         this.evolutions,
-         //this.isFavorite = false
+
       });
 
   Pokemon.fromJson(Map<String, dynamic> json) : sId = json['_id'] {

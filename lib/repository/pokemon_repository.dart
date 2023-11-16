@@ -1,21 +1,17 @@
-
 import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pokedex/model/pokemonWrapper.dart';
+import 'package:pokedex/pref.dart';
 
 import '../model/pokemon.dart';
+import '../usecase/pokemon_usecase.dart';
 
-//Reponsable de la gestion des données des pokemons
 class PokemonRepository {
-//stocker les données persistantes
-  final SharedPreferences prefs;
+  final Pref pref = Pref();
 
-
-
-  //prend une instance de shared preference comme argument
-  PokemonRepository({required this.prefs});
+  PokemonRepository();
 
 
 
@@ -30,14 +26,9 @@ class PokemonRepository {
   //
   // }
 
-
   Future<List<Pokemon>> getPokemonListFromLocal() async {
-    //chargement du contenu du fichier JSon stocké dans la variable jsonData
     final jsonData = await rootBundle.loadString('json/pokemon.json');
-    //decode le fichier json en une liste dynamic stocké dans la variable jsonList
     final List<dynamic> jsonList = json.decode(jsonData);
-    //transformation de la liste jsonList pour chaque élément jsonList creation d'un pokemon
-    //a partir de la class model pokemon , transformation en list
     final List<Pokemon> pokemonList = jsonList.map((json) {
       return Pokemon.fromJson(json);
     }).toList();
@@ -45,65 +36,78 @@ class PokemonRepository {
     return pokemonList;
   }
 
-  //mettre a jour la mise en favori d un pokemon dans la liste des pokemons
-  Future<void> updateFavoritePokemon(Pokemon pokemon) async {
-    //Liste de pokemons favoris vide
-    final prefs = await SharedPreferences.getInstance();
-    final List<String> favoritePokemon = prefs.getStringList(
-        'favoritePokemon') ?? [];
-    print(favoritePokemon);
-    //verifie si la liste contient deja le pokemon favoris selon son nationalId si c'est le cas supprimer
-      if (favoritePokemon.contains(pokemon.sId)) {
-        favoritePokemon.remove(pokemon.sId);
-      } else {
-        favoritePokemon.add(pokemon.sId);
-      }
-      //enregistrement de la mise a jour de favorite pokemon de maniere persistante
-      await prefs.setStringList('favoritePokemon', favoritePokemon);
 
-
+  Future<void> saveRandomFromPokemonList(String pokemonId) async {
+    await pref.saveRandomPokemon(pokemonId);
   }
 
-  //Recuperation des pokemons favoris
-  Future<List<Pokemon>> getFavoritePokemons(List<Pokemon> allPokemons) async {
-    final List<String> favoritePokemon = prefs.getStringList('favoritePokemon') ?? [];
+  Future<void> getRandomPokemon(String pokemonSid)async{
+    await pref.getRandomPokemon();
+  }
 
-    if ( favoritePokemon == null) {
-      // Aucun Pokémon en favori, renvoie une liste vide
-      return [];
+
+  Future<void> saveFavoritePokemons(List<String> favoritePokemonsIds) async {
+    await pref.saveFavoritePokemonIds(favoritePokemonsIds);
+  }
+
+
+  Future<bool> isFavoritePokemon(Pokemon pokemon) async {
+    final List<String> favoritePokemons = await pref.getFavoritePokemonsIds();
+    return (favoritePokemons.contains(pokemon.sId));
+  }
+
+  Future<List<String>> getFavoritePokemons() async {
+    return await pref.getFavoritePokemonsIds();
+    //final List<String> favoritePokemon =
+    // final allPokemons = await getPokemonListFromLocal();
+    // List<Pokemon> myFavoritePokemons = [];
+    // for (var pokemon in allPokemons) {
+    //   for (var favPokemon in favoritePokemon) {
+    //     if (pokemon.sId == favPokemon) {
+    //       myFavoritePokemons.add(pokemon);
+    //     }
+    //   }
+    // }
+    //return favoritePokemon;
+  }
+
+  Future<List<String>> deleteFavoritePokemon(Pokemon pokemon) async {
+    await removeFavoritePokemonByIds(pokemon);
+    return getFavoritePokemons();
+  }
+
+  Future<void> removeFavoritePokemonByIds(Pokemon pokemon) async {
+    var favoritePokemons = await pref.getFavoritePokemonsIds();
+    favoritePokemons.removeWhere((currentId) => currentId == pokemon.sId);
+    await pref.saveFavoritePokemonIds(favoritePokemons);
+  }
+
+  Future<List<Pokemon>> getFutureEvolutions(Pokemon pokemon) async {
+    final List<Pokemon> pokemonsEvolutions = [];
+    final listOfAllPokemons = await getPokemonListFromLocal();
+    for (var evolution in pokemon.evolutions!) {
+      listOfAllPokemons.forEach((currentPokemon) {
+        if (currentPokemon.sId == evolution.sId) {
+          pokemonsEvolutions.add(currentPokemon);
+        }
+      });
     }
-    //filtre tous les pokemons
-    final favoritePokemons = allPokemons
-    //inclure le pokemon dont le national ID est present dans liste de pokemons favoris
-        .where((pokemon) => favoritePokemon.contains(pokemon.sId))
-    //transformation en liste
-        .toList();
-
-    return favoritePokemons;
-
+    return pokemonsEvolutions;
   }
 
-  Future<void> saveRandomPokemonList(Pokemon pokemon) async {
-    final prefs = await SharedPreferences.getInstance();
-    final pokemonListJson = json.encode(pokemon.toJson());
-    await prefs.setString('randomPokemonList', pokemonListJson);
+  Future<List<Pokemon>> getPreviousEvolutions(Pokemon pokemon) async {
+    final allPokemons = await getPokemonListFromLocal();
+    final List<Pokemon> previousPokemonsEvolutions = [];
+    allPokemons.forEach((currentPokemon) {
+      currentPokemon.evolutions!.forEach((evolution) {
+        if (currentPokemon.sId == evolution.sId) {
+          previousPokemonsEvolutions.add(currentPokemon);
+        }
+      });
+    });
+
+    return previousPokemonsEvolutions;
   }
-
-
-  Future <Pokemon> generateRandomPokemon()async{
-    //List<Pokemon>? pokemonList;
-
-    final pokemonList = await getPokemonListFromLocal();
-    final random = Random();
-    final randomIndex = random.nextInt(pokemonList.length);
-    final randomPokemon = pokemonList[randomIndex];
-    await saveRandomPokemonList(randomPokemon);
-    return randomPokemon;
-  }
-
-
-
-
 
 
 }
