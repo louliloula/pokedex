@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/logic/pokemonhome_state.dart';
+import 'package:pokedex/model/pokemon_type.dart';
 import 'package:pokedex/screen/pokemondetail_screen.dart';
 import 'package:pokedex/usecase/pokemon_usecase.dart';
 
@@ -181,6 +182,9 @@ class _HeaderPokemonHome extends StatelessWidget {
 class _MyPokemonsList extends StatelessWidget{
   final List<PokemonWrapper> myPokemonsWrapper;
   final PokemonUseCase useCase;
+  final List<Color> colorsTypes =
+  TypeColors.colors.entries.map((color) => color.value).toList();
+
    _MyPokemonsList({super.key, required this.myPokemonsWrapper, required this.useCase});
 
   @override
@@ -239,9 +243,10 @@ class _MyPokemonsList extends StatelessWidget{
                                    overflow: TextOverflow.ellipsis,
                                    maxLines: 1,style: GoogleFonts.specialElite(),
                                  ),
-                                 subtitle: Text(myPokemonsWrapper[index].pokemon.types!.join("-"),style: GoogleFonts.specialElite(),),
+                                 subtitle: Text(myPokemonsWrapper[index].pokemon.types!.join("-"),style: GoogleFonts.specialElite(textStyle: TextStyle(color:colorsTypes[index] ))),
+                                 ),
                                ),
-                             ),
+
                            ],
                          ),
                        ),
