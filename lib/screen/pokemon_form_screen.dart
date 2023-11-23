@@ -45,8 +45,7 @@ class PokemonForm extends StatelessWidget {
                       color: Colors.black12,
                       child: Center(
                           child: IconButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         icon: Icon(
                           Icons.add,
                           size: 35,
@@ -109,19 +108,22 @@ class PokemonForm extends StatelessWidget {
       ),
     );
   }
-  showImageAlerteDialog(BuildContext alertcontext){
+
+  showImageAlerteDialog(BuildContext alertcontext) {
     showDialog(
         context: alertcontext,
-        builder: (context){
+        builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
-            title: Text("Select your pokemon",style: GoogleFonts.cabinSketch(color: Colors.blueGrey),),
+            title: Text(
+              "Select your pokemon",
+              style: GoogleFonts.cabinSketch(color: Colors.blueGrey),
+            ),
           );
         });
   }
 }
-
 
 class TypeChipPokemon extends StatelessWidget {
   final List<String> namesTypes =
@@ -142,5 +144,4 @@ class TypeChipPokemon extends StatelessWidget {
       activeBgColorList: colorsTypes,
     );
   }
-
 }

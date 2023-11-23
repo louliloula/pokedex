@@ -4,6 +4,7 @@ import 'package:pokedex/logic/pokemonhome_state.dart';
 import 'package:pokedex/screen/pokemondetail_screen.dart';
 import 'package:pokedex/usecase/pokemon_usecase.dart';
 
+
 import '../logic/pokemonhome_cubit.dart';
 import '../model/pokemon.dart';
 import '../model/pokemonWrapper.dart';
@@ -17,6 +18,7 @@ class PokemonHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
         create: (context) => PokemonHomeCubit(useCase)
           ..displayHomePage(),
@@ -25,7 +27,23 @@ class PokemonHomeScreen extends StatelessWidget {
             if (state is PokemonLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is GenerateHomeScreenSucessfully) {
-              return Container(
+              return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: [
+                        _HeaderPokemonHome(randomPokemonName: state.randomPokemon.pokemon.name!,
+                            randomPokemonImage: state.randomPokemon.pokemon.imageUrl!,
+                            randomPokemonDescription: state.randomPokemon.pokemon.description!),
+                        //MyPokemonCard(myPokemonWrapper: state.myRandomPokemonsList, useCase: useCase)
+                        _MyPokemonsList(myPokemonsWrapper: state.myRandomPokemonsList,useCase: useCase,)
+                      ],
+                    ),
+                  ),
+
+              );
+              /*Container(
                decoration: const BoxDecoration(
                  gradient: LinearGradient(
                    begin: AlignmentDirectional.center,
@@ -87,11 +105,12 @@ class PokemonHomeScreen extends StatelessWidget {
                         ),
                       ),
 
+
                     MyPokemonCard(
                         myPokemonWrapper: state.myRandomPokemonsList,useCase: useCase,)
                   ],
                 ),
-              );
+              );*/
             } else if (state is HomeScreenMessageError) {
               return Text(state.errorMessage);
             } else {
@@ -102,6 +121,139 @@ class PokemonHomeScreen extends StatelessWidget {
   }
 }
 
+class _HeaderPokemonHome extends StatelessWidget {
+  final String randomPokemonName;
+  final String randomPokemonImage;
+  final String randomPokemonDescription;
+  _HeaderPokemonHome({super.key, required this.randomPokemonName, required this.randomPokemonImage, required this.randomPokemonDescription});
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+     return  Container(
+       height: screenHeight/2.5,
+       width: screenWidth ,
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+           Padding(
+             padding: const EdgeInsets.only(top: 25, bottom: 15),
+             child: Text("Pokemon of the day",
+                 style: GoogleFonts.cabinSketch(textStyle: TextStyle(fontSize:25,color: Colors.blueGrey ),
+                 ),
+             ),
+           ),
+           Card(
+             color: Colors.white,
+             elevation: 5,
+             child: Row(
+               children: [
+                 Container(
+                   height: 150,
+                   width: 100,
+                   child: Image.network(randomPokemonImage),
+                 ),
+                 Flexible(
+                  flex: 2,
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.only(bottom: 3),
+                      child: Text(randomPokemonName),
+                    ),
+                    subtitle: Text(randomPokemonDescription),
+                  ),
+                )
+
+               ],
+             )
+             ,
+           ),
+
+         ],
+       ),
+     );
+  }
+
+}
+
+
+class _MyPokemonsList extends StatelessWidget{
+  final List<PokemonWrapper> myPokemonsWrapper;
+  final PokemonUseCase useCase;
+   _MyPokemonsList({super.key, required this.myPokemonsWrapper, required this.useCase});
+
+  @override
+  Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+      height: screenHeight/ 2,
+      width: screenWidth,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+           Padding(
+             padding: const EdgeInsets.only(bottom: 10),
+             child: Text("My pokemons",style: GoogleFonts.cabinSketch(textStyle: TextStyle(fontSize: 25, color: Colors.blueGrey))),
+           ),
+           Flexible(
+             flex: 2,
+               child: GridView.builder(
+                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                       crossAxisCount: 2,
+                       childAspectRatio: 2,
+                       mainAxisSpacing: 1),
+                   itemCount: myPokemonsWrapper.length,
+                   itemBuilder: (context, index) {
+                     return GestureDetector(
+                       onTap: () {
+                         Navigator.push(
+                             context,
+                             MaterialPageRoute(
+                                 builder: (context) => PokemonDetailScreen(
+                                   pokemonWrapper: myPokemonsWrapper[index],
+                                   useCase: useCase,)));
+                       },
+                       child: Card(
+                         color: Colors.white,
+                         shape: const RoundedRectangleBorder(
+                             borderRadius: BorderRadius.all(
+                                 Radius.circular(5)
+                             ),
+                             side: BorderSide(color: Colors.blueGrey)),
+                         child: Row(
+                           children: [
+                             Container(
+                               height: 50,
+                               width: 50,
+                               child: Image.network(
+                                 myPokemonsWrapper[index].pokemon.imageUrl!,
+                               ),
+                             ),
+                             Flexible(
+                               flex: 2,
+                               child: ListTile(
+                                 title: Text(
+                                   myPokemonsWrapper[index].pokemon.name!,
+                                   overflow: TextOverflow.ellipsis,
+                                   maxLines: 1,style: GoogleFonts.specialElite(),
+                                 ),
+                                 subtitle: Text(myPokemonsWrapper[index].pokemon.types!.join("-"),style: GoogleFonts.specialElite(),),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     );
+                   }) )
+         ],
+      ),
+
+    );
+  }
+
+}
 class MyPokemonCard extends StatelessWidget {
   final List<PokemonWrapper> myPokemonWrapper;
 
@@ -173,7 +325,8 @@ class MyPokemonCard extends StatelessWidget {
                             ),
                           ),
                         );
-                      })),
+                      })
+              ),
             ],
           ),
         ),
