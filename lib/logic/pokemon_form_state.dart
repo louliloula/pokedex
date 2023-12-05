@@ -13,5 +13,11 @@ class PokemonFormInitial extends PokemonFormState{
 }
 
 class PokemonTypeChoice extends PokemonFormState{
-  PokemonTypeChoice();
+  const PokemonTypeChoice();
+}
+
+class ErrorMessage extends PokemonFormState{
+  final String errorMessage;
+
+  const ErrorMessage(this.errorMessage);
 }

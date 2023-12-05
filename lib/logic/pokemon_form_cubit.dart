@@ -5,16 +5,18 @@ import '../repository/pokemon_repository.dart';
 
 class PokemonFormCubit extends Cubit<PokemonFormState>{
    PokemonRepository repository;
-  PokemonFormCubit(this.repository): super(PokemonFormInitial());
+  PokemonFormCubit(this.repository): super(const PokemonFormInitial());
 
 
   Future<void> nameOfMyOwnPokemon(String inputUser) async {
-
+   if(inputUser.isEmpty || inputUser is int){
+     emit(const ErrorMessage("Try again"));
+   }
   }
 
 
   void onClickCheckBox(){
-     emit(PokemonTypeChoice());
+     emit(const PokemonTypeChoice());
    }
 
 }
