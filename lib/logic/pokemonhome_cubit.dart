@@ -24,8 +24,11 @@ class PokemonHomeCubit extends Cubit<PokemonHomeState> {
   }
 
   void spawmRandomPokemonPerMinute() {
+    bool isRunning = true;
     timer = Timer.periodic(Duration(seconds: 60), (timer) async {
       emitRandomPokemon();
+
+      timer.cancel();
     });
   }
 

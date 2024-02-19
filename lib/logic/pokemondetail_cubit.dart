@@ -11,22 +11,30 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
   final PokemonUseCase useCase;
 
   PokemonDetailCubit(this.useCase, this.pokemonWrapper)
-      : super(PokemonDetailScreenInitial());
+      : super(const PokemonDetailScreenInitial());
 
   Future<void> onClickFavorite() async {
-    //bool newFavoriteStatus = await repository.toggleFavoritePokemons(pokemon);
-    bool newFavoriteStatus =
-        await useCase.toogleFavoritePokemons(pokemonWrapper);
+    bool newFavoriteStatus = await useCase.toogleFavoritePokemons(pokemonWrapper);
     emit(PokemonDetail(newFavoriteStatus, pokemonWrapper));
   }
 
   Future<void> init() async {
-    //bool readValue = await repository.isFavorite(pokemon);
     bool readValue = await useCase.isFavorite(pokemonWrapper);
+    pokemonWrapper.nextEvolution.contains(pokemonWrapper.pokemon.sId);
+    pokemonWrapper.previousPokemon.contains(pokemonWrapper.pokemon.sId);
     emit(PokemonDetail(readValue, pokemonWrapper));
   }
 
-  Future<void> getPokemonEvolution() async {
-    emit(FutureEvolutionOfPokemon());
+  Future<void> brouillon() async{
+
+    }
+
+
+
+
   }
-}
+
+
+
+
+

@@ -19,6 +19,8 @@ class PokemonDetailScreen extends StatelessWidget {
   final PokemonWrapper pokemonWrapper;
   final PokemonUseCase useCase;
 
+
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -38,7 +40,7 @@ class PokemonDetailScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.arrow_circle_left_outlined,
                             color: Colors.blueGrey,
                             size: 28,
@@ -48,7 +50,7 @@ class PokemonDetailScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 75),
                           child: Text("POKEMON DETAIL",
                               style: GoogleFonts.cabinSketch(
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 20, color: Colors.blueGrey))
                               //TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.normal)
                               ),
@@ -56,7 +58,7 @@ class PokemonDetailScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Padding(
@@ -98,7 +100,7 @@ class PokemonDetailScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -106,7 +108,7 @@ class PokemonDetailScreen extends StatelessWidget {
                               'Name : ${state.pokemonWrapper.pokemon.name}',
                               style: GoogleFonts.specialElite(fontSize: 15),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 18,
                             ),
                             SizedBox(
@@ -126,7 +128,7 @@ class PokemonDetailScreen extends StatelessWidget {
                     ),
                   ),
                   //HeaderPokemonDetail(pokemon: state.pokemon, isFavorite: state.isFavorite,),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   Padding(
@@ -139,14 +141,14 @@ class PokemonDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 25, left: 8),
                     child: Text(
-                      'EVOLUTIONS : ',
+                      'EVOLUTIONS : ${state.pokemonWrapper.nextEvolution} ',
                       style: GoogleFonts.specialElite(),
                     ),
                   ),
                 ],
               );
             } else {
-              return Text("Vide");
+              return const Text("bobo");
             }
           }),
           //),
@@ -162,8 +164,8 @@ class PokemonTypeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       decoration: BoxDecoration(
           color: TypeColors.colors[type],
           borderRadius: BorderRadius.circular(5)),
@@ -177,6 +179,9 @@ class PokemonTypeChip extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class HeaderPokemonDetail extends StatelessWidget {
   final Pokemon pokemon;
@@ -204,7 +209,7 @@ class HeaderPokemonDetail extends StatelessWidget {
                   pokemon.imageUrl!,
                   fit: BoxFit.fill,
                 ),
-                Positioned(
+                const Positioned(
                     left: 145,
                     top: 5,
                     child: Icon(
@@ -217,12 +222,12 @@ class HeaderPokemonDetail extends StatelessWidget {
             ),
             //Image.network(pokemon.imageUrl!, width: 150),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Name : ${pokemon.name}'),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Text('Type : ${pokemon.types?.join("-")}')
             ],
           ),

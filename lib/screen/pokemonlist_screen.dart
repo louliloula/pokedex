@@ -6,17 +6,15 @@ import 'package:pokedex/logic/pokemonlist_state.dart';
 import 'package:pokedex/model/pokemonWrapper.dart';
 import 'package:pokedex/screen/pokemondetail_screen.dart';
 
-
 import '../model/pokemon.dart';
 
 import '../repository/pokemon_repository.dart';
 import '../usecase/pokemon_usecase.dart';
 
 class PokemonListScreen extends StatelessWidget {
-
   final PokemonUseCase useCase;
 
-  PokemonListScreen({super.key, required this.useCase});
+  const PokemonListScreen({super.key, required this.useCase});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,6 @@ class PokemonListScreen extends StatelessWidget {
                       style: GoogleFonts.specialElite(),
                     ),
                   ),
-
                   PopupMenuButton<int>(onSelected: (sortAlphabetical) {
                     blocContext
                         .read<PokemonListCubit>()
@@ -54,8 +51,10 @@ class PokemonListScreen extends StatelessWidget {
                     return [
                       const PopupMenuItem(value: 0, child: Text("Pokemon A-Z")),
                       const PopupMenuItem(value: 1, child: Text("Pokemon Z-A")),
-                      const PopupMenuItem(value: 2, child: Text("Pokemon list")),
-                      const PopupMenuItem(value: 3, child: Text("Favorite Pokemon"))
+                      const PopupMenuItem(
+                          value: 2, child: Text("Pokemon list")),
+                      const PopupMenuItem(
+                          value: 3, child: Text("Favorite Pokemon"))
                     ];
                   })
                 ],
@@ -69,7 +68,7 @@ class PokemonListScreen extends StatelessWidget {
                   useCase: useCase,
                 ),
               if (state is PokemonListMessageError) Text(state.errorMessage),
-              if (state is PokemonListLoading) CircularProgressIndicator(),
+              if (state is PokemonListLoading) const CircularProgressIndicator(),
             ],
           );
         }),
@@ -79,11 +78,13 @@ class PokemonListScreen extends StatelessWidget {
 }
 
 class PokemonsList extends StatelessWidget {
-
   final List<PokemonWrapper> pokemonWrapperList;
   final PokemonUseCase useCase;
 
-  PokemonsList({super.key, required this.pokemonWrapperList, required this.useCase});
+  //final List <PokemonWrapper> pokeEvolution = PokemonWrapper(pokemon:,previousPokemon: ,nextEvolution: )
+
+  const PokemonsList(
+      {super.key, required this.pokemonWrapperList, required this.useCase});
 
   @override
   Widget build(BuildContext context) {
@@ -103,29 +104,29 @@ class PokemonsList extends StatelessWidget {
                           builder: (context) => PokemonDetailScreen(
                                 pokemonWrapper: pokemonWrapperList[index],
                                 useCase: useCase,
-                              ))
-                  );
+
+                              )));
                 },
                 child: Card(
                   elevation: 5,
                   shadowColor: Colors.blueGrey,
                   shape: const RoundedRectangleBorder(
                       side: BorderSide(color: Colors.black12)),
-                  margin: EdgeInsets.all(7),
+                  margin: const EdgeInsets.all(7),
                   child: Container(
                     width: screenWidth,
                     height: 200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    margin: EdgeInsets.all(5),
-                    padding: EdgeInsets.all(5),
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Stack(
                       children: [
                         Column(
                           children: [
                             Expanded(
-                               child : Image.network(
+                              child: Image.network(
                                 pokemonWrapperList[index].pokemon.imageUrl!,
                                 fit: BoxFit.fill,
                               ),
@@ -136,7 +137,7 @@ class PokemonsList extends StatelessWidget {
                                   pokemonWrapperList[index].pokemon.name!,
                                   style: GoogleFonts.specialElite(),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Text(
                                   '# ${pokemonWrapperList[index].pokemon.nationalId}',
                                   style: GoogleFonts.specialElite(),

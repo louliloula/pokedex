@@ -21,7 +21,7 @@ class PokemonUseCase {
     // });
     final List<PokemonWrapper> wrappers = getAllPokemons
         .map((pokemon) => PokemonWrapper(
-            pokemon: pokemon, previousPokemon: [], nextEvolution: []))
+            pokemon: pokemon, previousPokemon: [] , nextEvolution:[] ))
         .toList();
     //probleme ici
     //  for (var wrapper in wrappers) {
@@ -32,6 +32,32 @@ class PokemonUseCase {
     //    });
     //  }
     return wrappers;
+  }
+
+  PokemonWrapper? _searchById(List<PokemonWrapper> wrappers, String pokemonId) {
+    // for (var wrapper in wrappers) {
+    //   if(wrapper.pokemon.sId == pokemonId){
+    //     return wrapper;
+    //   }
+    //
+    // }
+    return wrappers
+        .firstWhereOrNull((wrapper) => wrapper.pokemon.sId == pokemonId);
+  }
+
+  Future<List<PokemonWrapper>> getPokemonsEvolution() async{
+    final getPokemonsWrapper = await getWrappers();
+    for (var wrapper in getPokemonsWrapper) {
+         wrapper.pokemon.evolutions?.forEach((evol) {
+            final pokemonWrapperEvolution = _searchById(getPokemonsWrapper, evol.sId!);
+            if (pokemonWrapperEvolution != null) {
+              wrapper.addEvolution(pokemonWrapperEvolution);
+            }
+            pokemonWrapperEvolution?.addEvolutionParente(wrapper);
+          });
+        }
+    return getPokemonsWrapper;
+
   }
 
 
@@ -92,14 +118,5 @@ class PokemonUseCase {
 
 
 
-  PokemonWrapper? _searchById(List<PokemonWrapper> wrappers, String pokemonId) {
-    // wrappers.forEach((wrapper) {
-    //   if(wrapper.pokemon.sId == pokemonId){
-    //     return wrapper;
-    //   }
-    // });
 
-    return wrappers
-        .firstWhereOrNull((wrapper) => wrapper.pokemon.sId == pokemonId);
-  }
 }

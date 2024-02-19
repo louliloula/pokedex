@@ -11,7 +11,7 @@ abstract class FavoritePokemonState extends Equatable {
 }
 
 class FavoritePokemonInitial extends FavoritePokemonState {
-  FavoritePokemonInitial();
+  const FavoritePokemonInitial();
 }
 
 class ListOfFavoritePokemon extends FavoritePokemonState {

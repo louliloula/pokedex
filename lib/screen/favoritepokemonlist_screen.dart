@@ -28,7 +28,7 @@ class FavoritePokemonList extends StatelessWidget {
             useCase: useCase,
           );
         } else {
-          return Center(child: Text("Vous n'avez pas de pokemons favoris"));
+          return const Center(child: Text("Vous n'avez pas de pokemons favoris"));
         }
       }),
     );
@@ -39,7 +39,7 @@ class FavoriteList extends StatelessWidget {
   final List<PokemonWrapper> allFavoritesWrapper;
   final PokemonUseCase useCase;
 
-  FavoriteList(
+  const FavoriteList(
       {super.key, required this.allFavoritesWrapper, required this.useCase});
 
   @override
@@ -71,7 +71,7 @@ class FavoriteList extends StatelessWidget {
                         leading: Image.network(
                             allFavoritesWrapper[index].pokemon.imageUrl!),
                         trailing: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.remove_circle_outline,
                             color: Colors.deepOrange,
                           ),

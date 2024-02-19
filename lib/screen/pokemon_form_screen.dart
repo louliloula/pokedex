@@ -10,7 +10,7 @@ import 'package:pokedex/repository/pokemon_repository.dart';
 class PokemonForm extends StatelessWidget {
   final PokemonRepository repository;
 
-  PokemonForm({super.key, required this.repository});
+  const PokemonForm({super.key, required this.repository});
 
   //final myPokemonNameController = TextEditingController();
 
@@ -133,7 +133,7 @@ class _HeadForm extends StatelessWidget{
        Padding(
          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
          child: SizedBox(
-           width: 218,
+           width: 185,
            child: TextField(
              //Methode onChange dans laquelle j'appelle le cubit
              style: GoogleFonts.specialElite(

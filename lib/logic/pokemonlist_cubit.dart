@@ -18,7 +18,7 @@ class PokemonListCubit extends Cubit<PokemonListState> {
 
   Future<void> displayPokemonsList() async {
     emit(PokemonListLoading());
-    _pokemonsWrapperList =  await useCase.getWrappers() ;
+    _pokemonsWrapperList =  await useCase.getPokemonsEvolution() ;
     emit(PokemonListLoaded(_pokemonsWrapperList));
   }
 

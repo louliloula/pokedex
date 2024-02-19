@@ -37,81 +37,13 @@ class PokemonHomeScreen extends StatelessWidget {
                         _HeaderPokemonHome(randomPokemonName: state.randomPokemon.pokemon.name!,
                             randomPokemonImage: state.randomPokemon.pokemon.imageUrl!,
                             randomPokemonDescription: state.randomPokemon.pokemon.description!),
-                        //MyPokemonCard(myPokemonWrapper: state.myRandomPokemonsList, useCase: useCase)
                         _MyPokemonsList(myPokemonsWrapper: state.myRandomPokemonsList,useCase: useCase,)
                       ],
                     ),
                   ),
 
               );
-              /*Container(
-               decoration: const BoxDecoration(
-                 gradient: LinearGradient(
-                   begin: AlignmentDirectional.center,
-                   end: AlignmentDirectional.bottomCenter,
-                   colors:<Color>[
-                     Colors.white,
-                     Colors.blueGrey,
 
-                   ]
-                 ),
-               ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 15, top: 35),
-                      child: Text(
-                        "Pokemon of the day",
-                        style: GoogleFonts.cabinSketch(textStyle: TextStyle(fontSize:25,color: Colors.blueGrey ))
-                            //TextStyle(fontSize: 20, fontFamily: 'RobotoMono',color: Colors.blueGrey),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 5,
-                        shadowColor: Colors.grey,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Image.network(
-                              state.randomPokemon.pokemon.imageUrl!,
-                              height: 180,
-                              width: 90,
-                            ),
-                            Expanded(
-                                child: ListTile(
-                              title: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0,top: 5),
-                                child:
-                                    Text('Name : ${state.randomPokemon.pokemon.name}',style: GoogleFonts.specialElite(),),
-                              ),
-                              subtitle:
-                                  Text('${state.randomPokemon.pokemon.description}',style: GoogleFonts.specialElite(),),
-                            ))
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 35),
-                     Padding(
-                      padding: EdgeInsets.only(bottom:18,left: 15),
-                        child: Text("My pokemons",style: GoogleFonts.cabinSketch(textStyle: TextStyle(fontSize: 25, color: Colors.blueGrey)),
-                        //TextStyle(fontSize: 20,color: Colors.blueGrey,),
-                        ),
-                      ),
-
-
-                    MyPokemonCard(
-                        myPokemonWrapper: state.myRandomPokemonsList,useCase: useCase,)
-                  ],
-                ),
-              );*/
             } else if (state is HomeScreenMessageError) {
               return Text(state.errorMessage);
             } else {
@@ -162,7 +94,10 @@ class _HeaderPokemonHome extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 3),
                       child: Text(randomPokemonName),
                     ),
-                    subtitle: Text(randomPokemonDescription),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(randomPokemonDescription),
+                    ),
                   ),
                 )
 

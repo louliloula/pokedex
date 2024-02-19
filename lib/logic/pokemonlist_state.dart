@@ -28,7 +28,7 @@ class PokemonListLoaded extends PokemonListState {
 
 class PokemonListMessageError extends PokemonListState {
   final String errorMessage;
-  PokemonListMessageError(this.errorMessage);
+  const PokemonListMessageError(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];

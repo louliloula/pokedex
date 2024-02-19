@@ -15,16 +15,19 @@ class PokemonDetailScreenInitial extends PokemonDetailState {
 }
 
 class PokemonDetail extends PokemonDetailState {
-  //final Pokemon pokemon;
   final bool isFavorite;
   final PokemonWrapper pokemonWrapper;
-
-  PokemonDetail(this.isFavorite, this.pokemonWrapper);
-
+  //final List<PokemonWrapper> nextEvolution;
+  const PokemonDetail(this.isFavorite, this.pokemonWrapper);
   @override
   List<Object?> get props => [pokemonWrapper, isFavorite];
 }
 
 class FutureEvolutionOfPokemon extends PokemonDetailState{
-  FutureEvolutionOfPokemon();
+  final List<PokemonWrapper> getPokemonsWrapperEvolution;
+  const FutureEvolutionOfPokemon( this.getPokemonsWrapperEvolution);
+  @override
+  List<Object?> get props => [getPokemonsWrapperEvolution];
+
+
 }
